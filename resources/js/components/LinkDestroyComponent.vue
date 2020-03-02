@@ -1,5 +1,5 @@
 <template>
-    <a class="dropdown-item" @click.prevent="destroy" :href="link">Remover</a>
+    <a class="dropdown-item" @click.prevent="destroy" :href="link"><i class="fa fa-trash-o fa-fw"></i> Remover</a>
 </template>
 
 <script>
@@ -20,8 +20,6 @@
 
                 let lineId = this.lineId;
                 let link = this.link;
-                console.log("this.link = " + link);
-                console.log("this.lineId = " + lineId);
 
                 if (confirm('Confirma a remoção desse registro?')) {
 

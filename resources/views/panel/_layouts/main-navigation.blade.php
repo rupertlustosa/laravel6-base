@@ -24,10 +24,10 @@
                         <span class="nav-label">Início</span>
                     </a>
                 </li>
-                <li class="{{ isActiveRoute('banners.*') }}">
-                    <a aria-expanded="false" role="button" href="{{ route('banners.index') }}">
+                <li class="{{ isActiveRoute('roles.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('roles.index') }}">
                         <i class="fa fa-image"></i>
-                        <span class="nav-label">Banners</span>
+                        <span class="nav-label">Roles</span>
                     </a>
                 </li>
             </ul>
@@ -37,7 +37,7 @@
                 {{ csrf_field() }}
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <a href="{{ route('administrators.profile') }}">
+                        <a href="{{ route('users.profile') }}">
                             <i class="fa fa-user"></i>Perfil
                         </a>
                     </li>

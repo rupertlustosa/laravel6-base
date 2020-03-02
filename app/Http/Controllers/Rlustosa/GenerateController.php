@@ -179,8 +179,18 @@ $schemas = [
         $camposListagem = [
             'id',
             'created_at',
+            'views',
+            'clicks',
+            'access',
+            'last_login',
+            'last_view',
+            'slug',
         ];
-        $camposCadastro = [];
+        $camposCadastro = [
+            'content',
+            'notes',
+            'comments',
+        ];
         $camposOcultos = [
             'deleted_at',
             'updated_at',
@@ -252,7 +262,7 @@ $schemas = [
         $conversaoDeLabels['price'] = 'Preço';
         $conversaoDeLabels['postal_code'] = 'CEP';
         $conversaoDeLabels['size'] = 'Tamanho';
-        $conversaoDeLabels['start_date'] = 'Data final';
+        $conversaoDeLabels['start_date'] = 'Data inicial';
         $conversaoDeLabels['state_id'] = 'Estado';
         $conversaoDeLabels['summary'] = 'Resumo';
         $conversaoDeLabels['tags'] = 'Palavras-chave';
@@ -266,6 +276,10 @@ $schemas = [
         $conversaoDeLabels['user_updater_id'] = 'Atualizado por:';
         $conversaoDeLabels['views'] = 'Visualizações';
         $conversaoDeLabels['value'] = 'Valor';
+        $conversaoDeLabels['subtitle'] = 'Subtítulo';
+        $conversaoDeLabels['file'] = 'Arquivo';
+        $conversaoDeLabels['author'] = 'Autor';
+        $conversaoDeLabels['last_view'] = 'Última visualização';
 
         foreach ($this->fileTypes as $tipo) {
 
@@ -726,7 +740,16 @@ $schemas = [
                 $hasDeletedAt = true;
             }
 
-            if (!in_array($campo['campo_original'], ['id', 'created_at', 'updated_at', 'deleted_at'])) {
+            $ignoreFields = [
+                'id',
+                'created_at',
+                'updated_at',
+                'deleted_at',
+                'user_creator_id',
+                'user_updater_id',
+                'user_eraser_id',
+            ];
+            if (!in_array($campo['campo_original'], $ignoreFields)) {
 
                 $camposParaSalvar[] = $this->gerarCamposParaSalvarNoRepositorio($campo['campo_original']);
 
@@ -1321,7 +1344,16 @@ class {{class}}Seeder extends Seeder
 
         foreach ($camposDaTabela as $campo) {
 
-            if ($campo['campo_original'] !== 'id' and $campo['campo_original'] !== 'created_at' and $campo['campo_original'] !== 'updated_at' and $campo['campo_original'] !== 'deleted_at') {
+            $ignoreFields = [
+                'id',
+                'created_at',
+                'updated_at',
+                'deleted_at',
+                'user_creator_id',
+                'user_updater_id',
+                'user_eraser_id',
+            ];
+            if (!in_array($campo['campo_original'], $ignoreFields)) {
 
                 $fillable[] = "        '" . $campo['campo_original'] . "',";
             }

@@ -28,5 +28,8 @@ Route::namespace('Panel')
         $panel->get('users/crop/{id}', 'UserController@imageCrop')->name('users.imageCrop');
         $panel->resource('users', UserController::class);
 
+        /* panel/roles */
+        $panel->resource('roles', RoleController::class);
+
         # rotas para panel
     });

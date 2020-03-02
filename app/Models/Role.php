@@ -1,19 +1,22 @@
 <?php
+/**
+ * @package    Controller
+ * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
+ * @date       02/03/2020 17:07:25
+ */
 
 declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\CreationDataTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model
 {
-
     use SoftDeletes;
-
-    const ADMINISTRATOR = 1;
-    const ATTENDANT = 2;
+    use CreationDataTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -27,11 +30,6 @@ class Role extends Model
     # Accessors & Mutators
 
     # Relationships
-    /**
-     * The users that belong to the role.
-     */
-    public function users()
-    {
-        return $this->belongsToMany(User::class)->using(RoleUser::class);
-    }
+
+    # Others
 }

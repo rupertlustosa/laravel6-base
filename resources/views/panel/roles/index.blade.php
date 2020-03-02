@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('panel.{{table}}.nav')
+    @include('panel.roles.nav')
 
     @php
 
@@ -23,8 +23,8 @@
                         <h5>@yield('_titulo_pagina_')</h5>
 
                         <div class="ibox-tools">
-                            @if(Auth::user()->can('create', \App\Models\{{class}}::class))
-                                <a href="{{ route('{{table}}.create') }}" class="btn btn-primary {{--btn-xs--}}">
+                            @if(Auth::user()->can('create', \App\Models\Role::class))
+                                <a href="{{ route('roles.create') }}" class="btn btn-primary {{--btn-xs--}}">
                                     <i class="fa fa-plus"></i> Cadastrar
                                 </a>
                             @endif
@@ -34,7 +34,7 @@
                     <div class="ibox-content">
 
                         <div class="m-b-lg">
-                            <form method="get" id="frm_search" action="{{ route('{{table}}.index') }}">
+                            <form method="get" id="frm_search" action="{{ route('roles.index') }}">
                                 @include('panel._assets.basic-search')
                             </form>
                         </div>
@@ -47,8 +47,10 @@
 
                                     <thead>
                                     <tr>
-                                        {{camposTḧ}}
                                         <th style="width: 100px; text-align: center">Ações</th>
+
+                                        <th>Nome</th>
+                                        <th class="hidden-xs hidden-sm" style="width: 150px;">Criado em</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -56,7 +58,6 @@
                                     @if($data->count())
                                         @foreach($data as $item)
                                             <tr id="tr-{{ $item->id }}">
-                                                {{camposTR}}
                                                 <td style="text-align: center">
                                                     <div class="btn-group" role="group">
                                                         <button id="btnGroupDrop1" type="button"
@@ -66,16 +67,19 @@
                                                             Ações
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a class="dropdown-item" href="{{ route('{{table}}.edit', [$item->id]) }}">
-                                                                <i class="fa fa-pencil fa-fw"></i> Editar
+                                                            <a class="dropdown-item" href="{{ route('roles.edit', [$item->id]) }}">
+                                                                <i class="fa fa-pencil fa-fw"></i>  Editar
                                                             </a>
                                                             <link-destroy-component
                                                                 line-id="{{ 'tr-'.$item->id }}"
-                                                                link="{{ route('{{table}}.destroy', [$item->id]) }}">
+                                                                link="{{ route('roles.destroy', [$item->id]) }}">
                                                             </link-destroy-component>
                                                         </div>
                                                     </div>
                                                 </td>
+
+                                                <td>{!! formatsUserCreationData($item->creationData()) !!}</td>
+                                                <td class="hidden-xs hidden-sm" data-toggle="tooltip" data-placement="left" title="{!! implode("\r\n", $item->creationData()) !!}">{{ $item->created_at->format('d/m/Y H:i') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -88,7 +92,7 @@
                                 <div class="alert alert-danger">
                                     Não temos nada para exibir. Caso tenha realizado uma busca você pode realizar
                                     uma nova com outros termos ou
-                                    <a class="alert-link" href="{{ route('{{table}}.index') }}">
+                                    <a class="alert-link" href="{{ route('roles.index') }}">
                                         limpar sua pesquisa.
                                     </a>
                                 </div>

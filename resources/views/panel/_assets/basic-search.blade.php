@@ -9,7 +9,8 @@
     </div>
     <div class="form-group col-sm-2 text-right">
         <label>&nbsp;</label>
-        <button type="submit" class="btn btn-primary form-control" id="btn_search">
+        <button type="submit" class="btn btn-primary form-control" id="btn_search"
+                data-toggle="tooltip" data-placement="bottom" title="Realiza a busca">
             <i class="fa fa-search"></i> Pesquisar
         </button>
     </div>

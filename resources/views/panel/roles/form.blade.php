@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('panel.{{table}}.nav')
+    @include('panel.roles.nav')
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -26,30 +26,37 @@
                         @endif
 
                         <form method="post" class="form-horizontal" id="frm_save" autocomplete="off"
-                              action="{{ isset($item) ? route('{{table}}.update', $item->id) : route('{{table}}.store') }}">
+                              action="{{ isset($item) ? route('roles.update', $item->id) : route('roles.store') }}">
                         {{ method_field(isset($item) ? 'PUT' : 'POST') }}
                         {{ csrf_field() }}
 
                         <!-- inicio dos campos -->
-                        {{campos}}
+                        
+                            <div class="form-row">
+                                <div class="form-group col-md-6 @if ($errors->has('name')) has-error @endif">
+                                    <label for="name">Nome</label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                    		value="{{ old('name', (isset($item) ? $item->name : '')) }}">
+                                    {!! $errors->first('name','<span class="help-block m-b-none">:message</span>') !!}
+                                </div>
+
+                            </div>
+                            
                         <!-- fim dos campos -->
 
-                            <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}"
-                                   data-toggle="tooltip" data-placement="bottom" title="Salva os dados atuais">
+                            <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}">
                             <button class="btn btn-primary" id="bt_salvar" type="submit">
                                 <i class="fa fa-save"></i>
                                 {{ isset($item) ? 'Salvar Alterações' : 'Salvar' }}
                             </button>
 
                             @if(!isset($item))
-                                <button class="btn btn-default" id="bt_salvar_adicionar" type="submit"
-                                        data-toggle="tooltip" data-placement="bottom" title="Salva e continua na tela de cadastro">
+                                <button class="btn btn-default" id="bt_salvar_adicionar" type="submit">
                                     <i class="fa fa-save"></i>
                                     Salvar e adicionar novo
                                 </button>
                             @else
-                                <a class="btn btn-default" id="ln_listar_form" href="{{ route('{{table}}.index') }}"
-                                   data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">
+                                <a class="btn btn-default" id="ln_listar_form" href="{{ route('roles.index') }}">
                                     <i class="fa fa-list-ul"></i>
                                     Listar
                                 </a>

@@ -3,21 +3,27 @@
         <h2>{{ $label }}</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ route('dashboard') }}">Início</a>
+                <a href="{{ route('dashboard') }}"
+                   data-toggle="tooltip" data-placement="bottom" title="Navega para o início">Início</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong><a href="{{ route('{{table}}.index') }}">{{ $label }}</a></strong>
+                <strong>
+                    <a href="{{ route('{{table}}.index') }}"
+                       data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">{{ $label }}</a>
+                </strong>
             </li>
         </ol>
     </div>
     <div class="col-lg-4">
         <div class="btn-group pull-right" style="margin-top: 30px;">
-            <a class="btn btn-default" href="{{ route('{{table}}.index') }}">
+            <a class="btn btn-default" href="{{ route('{{table}}.index') }}"
+               data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">
                 <i class="fa fa-list-ul"></i>
                 Listar
             </a>
             @if(Auth::user()->can('create', \App\Models\{{class}}::class))
-                <a class="btn btn-primary" id="ln_adicionar" href="{{ route('{{table}}.create') }}">
+                <a class="btn btn-primary" id="ln_adicionar" href="{{ route('{{table}}.create') }}"
+                   data-toggle="tooltip" data-placement="bottom" title="Cria um novo registro">
                     <i class="fa fa-plus-circle"></i> Novo
                 </a>
             @endif

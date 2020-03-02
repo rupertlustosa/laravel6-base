@@ -20,10 +20,6 @@ window.Vue = require('vue');
 
 Vue.component('link-destroy-component', require('./components/LinkDestroyComponent').default);
 
-Vue.component('group-product-component', require('./components/GroupProductComponent').default);
-Vue.component('product-main-component', require('./components/ProductMainComponent').default);
-Vue.component('product-item-component', require('./components/ProductItemComponent').default);
-
 //Vue.component('select2-vue-component', require('./components/Select2VueComponent').default);
 
 Vue.component(
@@ -56,6 +52,6 @@ const app = new Vue({
 });
 
 $('#app').tooltip({
-    //selector: '[data-toggle="tooltip"]'
-    //selector: "[data-tooltip=tooltip]",
+    selector: "[data-toggle=tooltip]",
+    container: "body"
 });

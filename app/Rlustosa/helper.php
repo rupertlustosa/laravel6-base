@@ -191,6 +191,22 @@ if (!function_exists("randHash")) {
     }
 }
 
+if (!function_exists("formatsUserCreationData")) {
+
+    function formatsUserCreationData($creationData)
+    {
+        return '
+                                                    <i class="fa fa-list-ul" data-toggle="tooltip" data-placement="bottom" title="'.implode('<br>', $creationData).'"></i>
+
+                                                    <!--small>
+                                                        <em>
+                                                            '.implode('<br>', $creationData).'
+                                                        </em>
+                                                    </small-->
+        ';
+    }
+}
+
 if (!function_exists("uploadWithCrop")) {
 
     function uploadWithCrop($fieldName, $module): ?string
