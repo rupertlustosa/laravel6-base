@@ -27,7 +27,13 @@
                 <li class="{{ isActiveRoute('roles.*') }}">
                     <a aria-expanded="false" role="button" href="{{ route('roles.index') }}">
                         <i class="fa fa-image"></i>
-                        <span class="nav-label">Roles</span>
+                        <span class="nav-label">Papéis</span>
+                    </a>
+                </li>
+                <li class="{{ isActiveRoute('users.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('users.index') }}">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">Usuários</span>
                     </a>
                 </li>
             </ul>

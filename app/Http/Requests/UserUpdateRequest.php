@@ -2,7 +2,7 @@
 /**
  * @package    Requests
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       09/12/2019 10:25:33
+ * @date       02/03/2020 19:01:44
  */
 
 declare(strict_types=1);
@@ -33,33 +33,21 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
 
-        return UserRule::rules();
-    }
+        $params = request()->route()->parameters();
 
-    public function onesignal()
-    {
+        $rules = UserRule::rules();
+        $rules['password'] = str_replace('required', 'nullable', $rules['password']);
+        $rules['email'] = 'nullable|email|max:255|unique:users,email,' . request('user')->id;
 
-        return [
-            'onesignal_user_id' => 'required',
-        ];
+        return $rules;
     }
 
     public function rulesUpdatePassword()
     {
         $rulesDefault = UserRule::rules();
 
-        //$rulesToUpdate['password'] = 'required|' . str_replace('confirmed', '', $rulesDefault['password']);
         $rulesToUpdate['password'] = str_replace('confirmed', '', $rulesDefault['password']);
         $rulesToUpdate['password_confirmation'] = 'required|same:password';
-
-        return $rulesToUpdate;
-    }
-
-    public function rulesForRecoveryPassword()
-    {
-        $rulesDefault = UserRule::rules();
-
-        $rulesToUpdate['email'] = str_replace('nullable', 'required', $rulesDefault['email']);
 
         return $rulesToUpdate;
     }

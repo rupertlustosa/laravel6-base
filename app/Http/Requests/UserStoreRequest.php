@@ -2,7 +2,7 @@
 /**
  * @package    Requests
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       09/12/2019 10:25:33
+ * @date       02/03/2020 19:01:44
  */
 
 declare(strict_types=1);
@@ -35,25 +35,6 @@ class UserStoreRequest extends FormRequest
     {
 
         return UserRule::rules();
-    }
-
-    public function rulesRegisterApi()
-    {
-
-        $rules = UserRule::rules();
-
-        $email = str_replace('nullable', 'required', $rules['email'])."|unique:users,email";
-
-        return [
-            'name' => $rules['name'],
-            'email' => $email,
-            'password' => $rules['password'],
-            'document_number' => $rules['document_number'],
-            'gender' => $rules['gender'],
-            'birth' => $rules['birth'],
-            'phone1' => str_replace('nullable', 'required', $rules['phone1']),
-        ];
-
     }
 
     /**

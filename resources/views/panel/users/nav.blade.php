@@ -8,7 +8,7 @@
             </li>
             <li class="breadcrumb-item active">
                 <strong>
-                    <a href="{{ route('roles.index') }}"
+                    <a href="{{ route('users.index') }}"
                        data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">{{ $label }}</a>
                 </strong>
             </li>
@@ -16,13 +16,13 @@
     </div>
     <div class="col-lg-4">
         <div class="btn-group pull-right" style="margin-top: 30px;">
-            <a class="btn btn-default" href="{{ route('roles.index') }}"
+            <a class="btn btn-default" href="{{ route('users.index') }}"
                data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">
                 <i class="fa fa-list-ul"></i>
                 Listar
             </a>
-            @if(Auth::user()->can('create', \App\Models\Role::class))
-                <a class="btn btn-primary" id="ln_adicionar" href="{{ route('roles.create') }}"
+            @if(Auth::user()->can('create', \App\Models\User::class))
+                <a class="btn btn-primary" id="ln_adicionar" href="{{ route('users.create') }}"
                    data-toggle="tooltip" data-placement="bottom" title="Cria um novo registro">
                     <i class="fa fa-plus-circle"></i> Novo
                 </a>

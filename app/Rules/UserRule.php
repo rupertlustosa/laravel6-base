@@ -2,7 +2,7 @@
 /**
  * @package    Rules
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       09/12/2019 10:25:33
+ * @date       02/03/2020 19:01:44
  */
 
 declare(strict_types=1);
@@ -17,23 +17,17 @@ class UserRule
      *
      * @var array
      */
-    protected static $rules = [
-        'id' => 'required',
+	protected static $rules = [
+		'id' => 'required',
         'name' => 'required|min:2|max:255',
-        'email' => 'nullable|email',
-        'password' => 'required|string|min:8|confirmed',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072',
-        'imageUpdate' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:3072',
-
-        'document_number' => 'required|formato_cpf|cpf|unique:users,document_number',
-
-        'rg' => 'nullable|min:2|max:18',
-        'gender' => 'nullable|in:MALE,FEMALE',
-        'birth' => 'nullable|date_format:d/m/Y',
-        'phone1' => 'nullable|min:2|max:15',
-        'phone2' => 'nullable|min:2|max:15',
-        'is_dev' => 'required',
-    ];
+        'email' => 'required|email',
+        'email_verified_at' => 'nullable|date_format:d/m/Y H:i',
+        'password' => 'required|min:2|max:255',
+        'remember_token' => 'nullable|min:2|max:100',
+        'user_creator_id' => 'nullable',
+        'user_updater_id' => 'nullable',
+        'user_eraser_id' => 'nullable',
+	];
 
     /**
      * Return default rules
@@ -46,14 +40,12 @@ class UserRule
         return [
             'name' => self::$rules['name'],
             'email' => self::$rules['email'],
+            'email_verified_at' => self::$rules['email_verified_at'],
             'password' => self::$rules['password'],
-            'image' => self::$rules['image'],
-            'document_number' => self::$rules['document_number'],
-            'rg' => self::$rules['rg'],
-            'gender' => self::$rules['gender'],
-            'birth' => self::$rules['birth'],
-            'phone1' => self::$rules['phone1'],
-            'phone2' => self::$rules['phone2'],
+            'remember_token' => self::$rules['remember_token'],
+            'user_creator_id' => self::$rules['user_creator_id'],
+            'user_updater_id' => self::$rules['user_updater_id'],
+            'user_eraser_id' => self::$rules['user_eraser_id'],
         ];
     }
 
@@ -65,36 +57,6 @@ class UserRule
     public static function messages()
     {
 
-        return [
-            'name.required' => 'Campo nome é obrigatório',
-            'name.min' => 'Campo nome deve conter pelo menos :min caracteres',
-            'name.max' => 'Campo nome deve conter no máximo :max caracteres',
-
-            'email.required' => 'Campo email é obrigatório',
-            'email.email' => 'Campo email inválido',
-            #'email.unique' => '',
-
-            'password.required' => 'Campo senha é obrigatório',
-            'password.min' => 'Campo senha deve conter pelo menos :min caracteres',
-            'password.confirmed' => 'Campo confirmação de senha é obrigatório',
-
-            'document_number.required' => 'Campo CPF é obrigatório',
-            'document_number.formato_cpf' => 'Campo CPF não possui formato válido',
-            'document_number.cpf' => 'Campo CPF é inválido',
-            'document_number.unique' => 'CPF já cadastrado',
-
-            'rg.required' => 'Campo RG é obrigatório',
-            'rg.min' => 'Campo RG deve conter um mínimo de :min caracteres',
-            'rg.max' => 'Campo RG deve ter um máximo de :max caracteres',
-
-            'gender.required' => 'Campo gênero é obrigatório',
-            'gender.in' => 'Campo gênero selecionado é inválido',
-
-            'birth.required' => 'Campo data nascimento é obrigatório',
-            'birth.date_format' => 'Campo data formato inválido',
-
-            'phone1.required' => 'Campo telefone é obrigatório',
-            'phone2.required' => 'Campo telefone é obrigatório',
-        ];
+        return [];
     }
 }

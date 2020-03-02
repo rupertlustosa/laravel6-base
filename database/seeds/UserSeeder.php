@@ -2,12 +2,12 @@
 /**
  * @package    Seeder
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       02/03/2020 18:59:03
+ * @date       02/03/2020 19:01:44
  */
 
 use Illuminate\Database\Seeder;
 
-class RoleSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
 
         foreach ($itens as $item) {
 
-            \App\Models\Role::create($item);
+            \App\Models\User::create($item);
         }
     }
 }

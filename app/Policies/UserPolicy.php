@@ -2,7 +2,7 @@
 /**
  * @package    Controller
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       09/12/2019 10:25:33
+ * @date       02/03/2020 19:01:44
  */
 
 declare(strict_types=1);
@@ -15,6 +15,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
+
     use HandlesAuthorization;
 
     /**
@@ -67,8 +68,8 @@ class UserPolicy
         return true;
     }
 
-    public function profile(User $user, User $profile)
+    public function profile(AuthUser $authUser, User $user)
     {
-        return $user->id === $profile->id;
+        return $authUser->id === $user->id;
     }
 }

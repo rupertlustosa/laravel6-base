@@ -45,18 +45,21 @@
                         <!-- fim dos campos -->
 
                             <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}">
-                            <button class="btn btn-primary" id="bt_salvar" type="submit">
+                            <button class="btn btn-primary" id="bt_salvar" type="submit"
+                                    data-toggle="tooltip" data-placement="bottom" title="Salva os dados atuais">
                                 <i class="fa fa-save"></i>
                                 {{ isset($item) ? 'Salvar Alterações' : 'Salvar' }}
                             </button>
 
                             @if(!isset($item))
-                                <button class="btn btn-default" id="bt_salvar_adicionar" type="submit">
+                                <button class="btn btn-default" id="bt_salvar_adicionar" type="submit"
+                                        data-toggle="tooltip" data-placement="bottom" title="Salva e continua na tela de cadastro">
                                     <i class="fa fa-save"></i>
                                     Salvar e adicionar novo
                                 </button>
                             @else
-                                <a class="btn btn-default" id="ln_listar_form" href="{{ route('roles.index') }}">
+                                <a class="btn btn-default" id="ln_listar_form" href="{{ route('roles.index') }}"
+                                   data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">
                                     <i class="fa fa-list-ul"></i>
                                     Listar
                                 </a>

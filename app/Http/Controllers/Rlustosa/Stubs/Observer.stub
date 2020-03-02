@@ -24,7 +24,6 @@ class {{class}}Observer
     {
 
         ${{classVar}}->user_creator_id = \Auth::id();
-        //${{classVar}}->user_updater_id = \Auth::id();
     }
 
 

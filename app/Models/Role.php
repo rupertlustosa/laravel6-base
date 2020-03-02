@@ -2,7 +2,7 @@
 /**
  * @package    Controller
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       02/03/2020 17:07:25
+ * @date       02/03/2020 18:59:03
  */
 
 declare(strict_types=1);
@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model
 {
     use SoftDeletes;
-    use CreationDataTrait;
 
     /**
      * The attributes that are mass assignable.

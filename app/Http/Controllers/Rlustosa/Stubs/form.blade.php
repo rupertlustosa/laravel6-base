@@ -34,9 +34,9 @@
                         {{campos}}
                         <!-- fim dos campos -->
 
-                            <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}"
-                                   data-toggle="tooltip" data-placement="bottom" title="Salva os dados atuais">
-                            <button class="btn btn-primary" id="bt_salvar" type="submit">
+                            <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}">
+                            <button class="btn btn-primary" id="bt_salvar" type="submit"
+                                    data-toggle="tooltip" data-placement="bottom" title="Salva os dados atuais">
                                 <i class="fa fa-save"></i>
                                 {{ isset($item) ? 'Salvar Alterações' : 'Salvar' }}
                             </button>

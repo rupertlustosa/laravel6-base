@@ -63,8 +63,6 @@ class {{class}}Service
 
             $model = new {{class}}();
             $model->fill($data);
-            #$model->user_creator_id = \Auth::id();
-            #$model->user_updater_id = \Auth::id();
             $model->save();
 
             return $model;
@@ -75,7 +73,6 @@ class {{class}}Service
     {
 
         $model->fill($data);
-        #$model->user_updater_id = \Auth::id();
         $model->save();
 
         return $model;
@@ -83,9 +80,6 @@ class {{class}}Service
 
     public function delete({{class}} $model): ?bool
     {
-        #$model->user_eraser_id = \Auth::id();
-        #$model->timestamps = false;
-        #$model->save();
 
         return $model->delete();
     }

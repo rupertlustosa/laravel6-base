@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('panel.roles.nav')
+    @include('panel.users.nav')
 
     @php
 
@@ -23,8 +23,8 @@
                         <h5>@yield('_titulo_pagina_')</h5>
 
                         <div class="ibox-tools">
-                            @if(Auth::user()->can('create', \App\Models\Role::class))
-                                <a href="{{ route('roles.create') }}" class="btn btn-primary {{--btn-xs--}}">
+                            @if(Auth::user()->can('create', \App\Models\User::class))
+                                <a href="{{ route('users.create') }}" class="btn btn-primary {{--btn-xs--}}">
                                     <i class="fa fa-plus"></i> Cadastrar
                                 </a>
                             @endif
@@ -34,7 +34,7 @@
                     <div class="ibox-content">
 
                         <div class="m-b-lg">
-                            <form method="get" id="frm_search" action="{{ route('roles.index') }}">
+                            <form method="get" id="frm_search" action="{{ route('users.index') }}">
                                 @include('panel._assets.basic-search')
                             </form>
                         </div>
@@ -49,6 +49,8 @@
                                     <tr>
                                         
                                         <th>Nome</th>
+                                        <th>E-mail</th>
+                                        <th>Password</th>
                                         <th class="hidden-xs hidden-sm" style="width: 150px;">Criado em</th>
                                         <th style="width: 100px; text-align: center">Ações</th>
                                     </tr>
@@ -60,6 +62,8 @@
                                             <tr id="tr-{{ $item->id }}">
                                                 
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->password }}</td>
                                                 <td class="hidden-xs hidden-sm">{{ $item->created_at->format('d/m/Y H:i') }}</td>
                                                 <td style="text-align: center">
                                                     <div class="btn-group" role="group">
@@ -70,12 +74,12 @@
                                                             Ações
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a class="dropdown-item" href="{{ route('roles.edit', [$item->id]) }}">
+                                                            <a class="dropdown-item" href="{{ route('users.edit', [$item->id]) }}">
                                                                 <i class="fa fa-pencil fa-fw"></i> Editar
                                                             </a>
                                                             <link-destroy-component
                                                                 line-id="{{ 'tr-'.$item->id }}"
-                                                                link="{{ route('roles.destroy', [$item->id]) }}">
+                                                                link="{{ route('users.destroy', [$item->id]) }}">
                                                             </link-destroy-component>
                                                         </div>
                                                     </div>
@@ -92,7 +96,7 @@
                                 <div class="alert alert-danger">
                                     Não temos nada para exibir. Caso tenha realizado uma busca você pode realizar
                                     uma nova com outros termos ou
-                                    <a class="alert-link" href="{{ route('roles.index') }}">
+                                    <a class="alert-link" href="{{ route('users.index') }}">
                                         limpar sua pesquisa.
                                     </a>
                                 </div>
