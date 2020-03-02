@@ -1,0 +1,57 @@
+<?php
+/**
+ * @package    Observers
+ * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
+ * @date       {{date}} {{time}}
+ */
+
+declare(strict_types=1);
+
+namespace App\Observers;
+
+use App\Models\{{class}};
+
+class {{class}}Observer
+{
+
+    /**
+     * Handle the {{classVar}} "creating" event.
+     *
+     * @param  \App\Models\{{class}}  ${{classVar}}
+     * @return void
+     */
+    public function creating({{class}} ${{classVar}})
+    {
+
+        ${{classVar}}->user_creator_id = \Auth::id();
+        //${{classVar}}->user_updater_id = \Auth::id();
+    }
+
+
+    /**
+     * Handle the {{classVar}} "updating" event.
+     *
+     * @param  \App\Models\{{class}}  ${{classVar}}
+     * @return void
+     */
+    public function updating({{class}} ${{classVar}})
+    {
+
+        ${{classVar}}->user_updater_id = \Auth::id();
+    }
+
+
+    /**
+     * Handle the {{classVar}} "deleting" event.
+     *
+     * @param  \App\Models\{{class}}  ${{classVar}}
+     * @return void
+     */
+    public function deleting({{class}} ${{classVar}})
+    {
+
+        ${{classVar}}->user_eraser_id = \Auth::id();
+        ${{classVar}}->timestamps = false;
+        ${{classVar}}->save();
+    }
+}

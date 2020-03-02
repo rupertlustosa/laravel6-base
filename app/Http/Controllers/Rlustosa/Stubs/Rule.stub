@@ -1,0 +1,47 @@
+<?php
+/**
+ * @package    Rules
+ * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
+ * @date       {{date}} {{time}}
+ */
+
+declare(strict_types=1);
+
+namespace App\Rules;
+
+class {{class}}Rule
+{
+
+    /**
+     * Validation rules that apply to the request.
+     *
+     * @var array
+     */
+	protected static $rules = [
+		{{regras}}
+	];
+
+    /**
+     * Return default rules
+     *
+     * @return array
+     */
+    public static function rules()
+    {
+
+        return [
+            {{thisRegras}}
+        ];
+    }
+
+    /**
+     * Return default messages
+     *
+     * @return array
+     */
+    public static function messages()
+    {
+
+        return [];
+    }
+}
