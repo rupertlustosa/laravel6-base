@@ -2,14 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Address;
-use App\Models\CashbackCampaign;
-use App\Models\Category;
-use App\Models\Coupon;
 use App\Models\Role;
-use App\Models\Sale;
-use App\Models\StatusSaleSale;
-use App\Models\Type;
 use App\Models\User;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
