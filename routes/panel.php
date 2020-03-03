@@ -31,5 +31,8 @@ Route::namespace('Panel')
         /* panel/roles */
         $panel->resource('roles', RoleController::class);
 
+    /* panel/sales */
+        $panel->resource('sales', SaleController::class);
+
         # rotas para panel
     });

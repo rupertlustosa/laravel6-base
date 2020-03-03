@@ -36,6 +36,12 @@
                         <span class="nav-label">Usuários</span>
                     </a>
                 </li>
+                <li class="{{ isActiveRoute('sales.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('sales.index') }}">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">Vendas</span>
+                    </a>
+                </li>
             </ul>
 
             <form name="frm_new_users_notifications" id="frm_new_users_notifications">
