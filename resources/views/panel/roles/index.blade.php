@@ -20,9 +20,11 @@
 
                     <div class="ibox-title">
 
-                        <h5>@yield('_titulo_pagina_')</h5>
+                        <h5 v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}">
+                            @yield('_titulo_pagina_')
+                        </h5>
 
-                        <div class="ibox-tools">
+                        <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'false' : 'true' }}" class="ibox-tools">
                             @if(Auth::user()->can('create', \App\Models\Role::class))
                                 <a href="{{ route('roles.create') }}" class="btn btn-primary {{--btn-xs--}}">
                                     <i class="fa fa-plus"></i> Cadastrar
@@ -47,7 +49,7 @@
 
                                     <thead>
                                     <tr>
-                                        
+
                                         <th>Nome</th>
                                         <th class="hidden-xs hidden-sm" style="width: 150px;">Criado em</th>
                                         <th style="width: 100px; text-align: center">Ações</th>
@@ -58,7 +60,7 @@
                                     @if($data->count())
                                         @foreach($data as $item)
                                             <tr id="tr-{{ $item->id }}">
-                                                
+
                                                 <td>{{ $item->name }}</td>
                                                 <td class="hidden-xs hidden-sm">{{ $item->created_at->format('d/m/Y H:i') }}</td>
                                                 <td style="text-align: center">

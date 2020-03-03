@@ -14,7 +14,7 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-4">
+    <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}" class="col-lg-4">
         <div class="btn-group pull-right" style="margin-top: 30px;">
             <a class="btn btn-default" href="{{ route('roles.index') }}"
                data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">

@@ -1153,7 +1153,7 @@ class {{class}}Seeder extends Seeder
 
                     $thead = '                                        <th class="hidden-xs hidden-sm" style="width: 150px;">' . $label['nome'] . '</th>';
                     $tbody = '                                                <td class="hidden-xs hidden-sm"
-                                                    data-toggle="tooltip" data-placement="bottom" title="{!! implode("\r\n", $item->creationData()) !!}">>{{ $item->' . $nome_banco . '->format(\'d/m/Y H:i\') }}</td>';
+                                                    data-toggle="tooltip" data-placement="bottom" title="{!! implode("\r\n", $item->creationData()) !!}">{{ $item->' . $nome_banco . '->format(\'d/m/Y H:i\') }}</td>';
                 } elseif (substr($nome_banco, 0, 5) === 'image') {
 
                     /*if (!empty(substr($nome_banco, 6, 1))){
