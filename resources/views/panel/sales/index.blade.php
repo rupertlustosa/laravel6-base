@@ -40,14 +40,15 @@
                                 <div class="row">
                                     <div class="form-group col-md-3">
                                         <label for="active">Sincronizadas?</label>
-                                        <select name="active" id="active" class="form-control">
-                                            @foreach(config('enums.boolean') as $i => $v)
+                                        <select name="synced" id="synced" class="form-control">
+                                            <option value="">Todas</option>
+                                            @foreach(config('enums.synced') as $i => $v)
                                                 <option
-                                                    value="{{ $i }}" {{ request('active') == $i ? 'selected' : '' }}>{{ $v }} </option>
+                                                    value="{{ $i }}" {{ request('synced') == $i ? 'selected' : '' }}>{{ $v }} </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-7">
 
                                     </div>
                                     <div class="form-group col-sm-2 text-right">

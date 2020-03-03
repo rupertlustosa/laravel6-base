@@ -33,6 +33,16 @@ class SaleService
             return $query->where('id', 'LIKE', '%' . $search . '%');
         });
 
+        if (request('synced') == 'false') {
+
+            $query->whereNull('synced_at');
+        }
+
+        if (request('synced') == 'true') {
+
+            $query->whereNotNull('synced_at');
+        }
+
         return $query->orderByDesc('id');
     }
 

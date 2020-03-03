@@ -9,4 +9,8 @@ return [
         '0' => 'Não',
         '1' => 'Sim'
     ],
+    'synced' => [
+        'false' => 'Não',
+        'true' => 'Sim'
+    ],
 ];
