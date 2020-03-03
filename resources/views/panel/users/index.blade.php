@@ -8,7 +8,7 @@
 
     @php
 
-        //$_placeholder_ = "Localize por ''";
+        $_placeholder_ = "Localize por 'Nome ou e-mail'";
     @endphp
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -20,9 +20,11 @@
 
                     <div class="ibox-title">
 
-                        <h5>@yield('_titulo_pagina_')</h5>
+                        <h5 v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}">
+                            @yield('_titulo_pagina_')
+                        </h5>
 
-                        <div class="ibox-tools">
+                        <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'false' : 'true' }}" class="ibox-tools">
                             @if(Auth::user()->can('create', \App\Models\User::class))
                                 <a href="{{ route('users.create') }}" class="btn btn-primary {{--btn-xs--}}">
                                     <i class="fa fa-plus"></i> Cadastrar
@@ -35,7 +37,38 @@
 
                         <div class="m-b-lg">
                             <form method="get" id="frm_search" action="{{ route('users.index') }}">
-                                @include('panel._assets.basic-search')
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label for="search">Localizar</label>
+                                        <input type="text" id="search" name="search" class="form-control"
+                                               value="{{ request('search') }}"
+                                               placeholder="{{ isset($_placeholder_) ? $_placeholder_ : 'Digite algo para realizar sua busca' }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="type">Perfil</label>
+                                        <select id="role_id" name="role_id" class="form-control">
+                                            <option value="">Todos</option>
+                                            @foreach (\App\Models\Role::all() as $role)
+                                                <option value="{{ $role->id }}"
+                                                        @if ($role->id == request('role_id', (isset($item) ? $item->role_id : '')))
+                                                        selected="selected"
+                                                    @endif
+                                                >{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+
+                                    </div>
+                                    <div class="form-group col-sm-2 text-right">
+                                        <label>&nbsp;</label>
+                                        <button type="submit" class="btn btn-primary form-control" id="btn_search"
+                                                data-toggle="tooltip" data-placement="bottom" title="Realiza a busca">
+                                            <i class="fa fa-search"></i> Pesquisar
+                                        </button>
+                                    </div>
+                                </div>
+
                             </form>
                         </div>
 
@@ -47,10 +80,10 @@
 
                                     <thead>
                                     <tr>
-                                        
+
                                         <th>Nome</th>
                                         <th>E-mail</th>
-                                        <th>Password</th>
+                                        <th>Perfis</th>
                                         <th class="hidden-xs hidden-sm" style="width: 150px;">Criado em</th>
                                         <th style="width: 100px; text-align: center">Ações</th>
                                     </tr>
@@ -60,11 +93,18 @@
                                     @if($data->count())
                                         @foreach($data as $item)
                                             <tr id="tr-{{ $item->id }}">
-                                                
+
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
-                                                <td>{{ $item->password }}</td>
-                                                <td class="hidden-xs hidden-sm">{{ $item->created_at->format('d/m/Y H:i') }}</td>
+                                                <td>
+                                                    @foreach ($item->roles->pluck('name') as $role)
+                                                        <span class="label label-primary">{{ $role }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td class="hidden-xs hidden-sm"
+                                                    data-toggle="tooltip" data-placement="bottom" title="{!! implode("\r\n", $item->creationData()) !!}">
+                                                    {{ $item->created_at->format('d/m/Y H:i') }}
+                                                </td>
                                                 <td style="text-align: center">
                                                     <div class="btn-group" role="group">
                                                         <button id="btnGroupDrop1" type="button"
@@ -74,7 +114,8 @@
                                                             Ações
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a class="dropdown-item" href="{{ route('users.edit', [$item->id]) }}">
+                                                            <a class="dropdown-item"
+                                                               href="{{ route('users.edit', [$item->id]) }}">
                                                                 <i class="fa fa-pencil fa-fw"></i> Editar
                                                             </a>
                                                             <link-destroy-component

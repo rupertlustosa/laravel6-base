@@ -15,7 +15,7 @@
         </ol>
     </div>
     <div class="col-lg-4">
-        <div class="btn-group pull-right" style="margin-top: 30px;">
+        <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}" class="btn-group pull-right" style="margin-top: 30px;">
             <a class="btn btn-default" href="{{ route('users.index') }}"
                data-toggle="tooltip" data-placement="bottom" title="Navega para a listagem">
                 <i class="fa fa-list-ul"></i>

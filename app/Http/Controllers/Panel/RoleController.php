@@ -32,7 +32,7 @@ class RoleController extends ApiBaseController
     {
 
         $this->service = $service;
-        $this->label = 'Papéis';
+        $this->label = 'Perfis';
     }
 
     public function index(): View

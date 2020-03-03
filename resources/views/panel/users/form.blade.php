@@ -91,7 +91,7 @@
                                 @endphp
                                 <div class="form-row">
                                     <div class="form-group col-md-12 @if ($errors->has('roles')) has-error @endif">
-                                        <label for="columnist_id">Qual o nível dessa pessoa?</label>
+                                        <label for="columnist_id">Quais os perfis desse usuário?</label>
                                         <select class="form-control select2" multiple name="roles[]" id="roles">
                                             <option value="">Selecione abaixo</option>
                                             @foreach($roleOptions as $i => $v)
