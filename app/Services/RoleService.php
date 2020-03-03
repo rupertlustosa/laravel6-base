@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\DB;
 class RoleService
 {
 
+    public function paginate(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()->paginate($limit);
+    }
+
     private function buildQuery(): Builder
     {
 
@@ -34,12 +40,6 @@ class RoleService
         });
 
         return $query->orderByDesc('id');
-    }
-
-    public function paginate(int $limit): LengthAwarePaginator
-    {
-
-        return $this->buildQuery()->paginate($limit);
     }
 
     public function all(): Collection

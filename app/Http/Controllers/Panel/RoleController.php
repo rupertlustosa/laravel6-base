@@ -15,6 +15,7 @@ use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Role;
 use App\Services\RoleService;
 use App\Traits\LogActivity;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -119,7 +120,7 @@ class RoleController extends ApiBaseController
 
         try {
 
-            if (!\Auth::user()->can('delete', $role)) {
+            if (!Auth::user()->can('delete', $role)) {
 
                 return $this->sendUnauthorized();
             }

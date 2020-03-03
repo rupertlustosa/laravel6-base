@@ -43,7 +43,8 @@
 
                             @if(!isset($item))
                                 <button class="btn btn-default" id="bt_salvar_adicionar" type="submit"
-                                        data-toggle="tooltip" data-placement="bottom" title="Salva e continua na tela de cadastro">
+                                        data-toggle="tooltip" data-placement="bottom"
+                                        title="Salva e continua na tela de cadastro">
                                     <i class="fa fa-save"></i>
                                     Salvar e adicionar novo
                                 </button>

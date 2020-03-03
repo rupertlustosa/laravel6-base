@@ -6,9 +6,6 @@ use App\Models\CashbackCampaign;
 use App\Models\Coupon;
 use App\Models\GroupProduct;
 use App\Models\Product;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator as BaseValidator;
 
 /**

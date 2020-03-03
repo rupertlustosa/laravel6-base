@@ -473,19 +473,6 @@ class GenerateController2 extends Controller
 ';
     }
 
-    public function conteudoEntreParentesis($Type)
-    {
-
-        $conteudo = null;
-        $partes = explode('(', $Type);
-        if (count($partes) > 1) {
-
-            $partes = explode(')', $partes[1]);
-            $conteudo = str_replace("'", "", $partes[0]);
-        }
-        return $conteudo;
-    }
-
     public function gerarController($arquivoController)
     {
         $stub = $this->files->get($this->getStubPath() . '/Controller.stub');
@@ -1216,6 +1203,19 @@ class {{class}}Seeder extends Seeder
 
             return false;
         }
+    }
+
+    public function conteudoEntreParentesis($Type)
+    {
+
+        $conteudo = null;
+        $partes = explode('(', $Type);
+        if (count($partes) > 1) {
+
+            $partes = explode(')', $partes[1]);
+            $conteudo = str_replace("'", "", $partes[0]);
+        }
+        return $conteudo;
     }
 
     public function gerarDelete()

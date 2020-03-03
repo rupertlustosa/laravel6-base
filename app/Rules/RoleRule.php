@@ -17,13 +17,13 @@ class RoleRule
      *
      * @var array
      */
-	protected static $rules = [
-		'id' => 'required',
+    protected static $rules = [
+        'id' => 'required',
         'name' => 'required|min:2|max:255',
         'user_creator_id' => 'nullable',
         'user_updater_id' => 'nullable',
         'user_eraser_id' => 'nullable',
-	];
+    ];
 
     /**
      * Return default rules

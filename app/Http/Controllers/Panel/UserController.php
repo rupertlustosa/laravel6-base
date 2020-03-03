@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Services\RoleService;
 use App\Services\UserService;
 use App\Traits\LogActivity;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -124,7 +125,7 @@ class UserController extends ApiBaseController
 
         try {
 
-            if (!\Auth::user()->can('delete', $user)) {
+            if (!Auth::user()->can('delete', $user)) {
 
                 return $this->sendUnauthorized();
             }
