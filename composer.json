@@ -17,6 +17,7 @@
         "laravel/socialite": "^4.3",
         "laravel/telescope": "^2.1",
         "laravel/tinker": "^1.0",
+        "predis/predis": "^1.1",
         "proengsoft/laravel-jsvalidation": "^2.5"
     },
     "require-dev": {

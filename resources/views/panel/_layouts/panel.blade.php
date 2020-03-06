@@ -73,6 +73,10 @@
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
+<script>
+    window.laravel_echo_port = '{{env("LARAVEL_ECHO_PORT")}}';
+</script>
+<script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
 
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>

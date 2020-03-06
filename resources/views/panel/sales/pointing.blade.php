@@ -1,15 +1,39 @@
-@extends('panel._layouts.panel')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config('app.name', 'Laravel') }} - @yield('_titulo_pagina_') </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{!! mix('css/app.css') !!}"/>
+    <link rel="stylesheet" href="{!! mix('css/theme.css') !!}"/>
+    @yield('styles')
+    <style>
+        .form-control, .single-line {
+            border: 1px solid rgb(223, 225, 229);
+        }
 
-@section('_titulo_pagina_', 'Lista de '.$label)
+        .select2-container--bootstrap4 .select2-dropdown {
+            z-index: 9999;
+        }
 
-@section('content')
+        .navbar ul .dropdown-menu {
+            min-width: 13rem !important;
+        }
 
-    @include('panel.sales.nav')
+        .select2-selection {
+            padding: 0;
+        }
 
-    @php
-
-        //$_placeholder_ = "Localize por ''";
-    @endphp
+        @media only screen and (max-width: 768px) {
+            .top-navigation .wrapper.wrapper-content {
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body class="top-navigation skin-1">
+<div id="app">
 
     <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -17,21 +41,6 @@
             <div class="col-lg-12">
 
                 <div class="ibox">
-
-                    <div class="ibox-title">
-
-                        <h5 v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}">
-                            @yield('_titulo_pagina_')
-                        </h5>
-
-                        <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'false' : 'true' }}" class="ibox-tools">
-                            @if(Auth::user()->can('create', \App\Models\Sale::class))
-                                <a href="{{ route('sales.create') }}" class="btn btn-primary {{--btn-xs--}}">
-                                    <i class="fa fa-plus"></i> Cadastrar
-                                </a>
-                            @endif
-                        </div>
-                    </div>
 
                     <div class="ibox-content">
 
@@ -153,27 +162,49 @@
             </div>
         </div>
     </div>
-@endsection
 
-@section('styles')
+</div>
 
-@endsection
+<script src="//{{ Request::getHost() }}:{{env('LARAVEL_ECHO_PORT')}}/socket.io/socket.io.js"></script>
+
+<script src="{{ mix('/js/manifest.js') }}"></script>
+<script src="{{ mix('/js/vendor.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{ mix('/js/custom-masks.js') }}"></script>
+<script src="{{ mix('/js/moment.js') }}"></script>
+{{--<script src="{{ mix('/js/blockUI.js') }}"></script>--}}
+<script src="{{ mix('/js/functions.js') }}"></script>
+
+{{--<script src="{{ mix('/js/custom-select2.js') }}"></script>
+<script src="{{ mix('/js/custom-datepicker.js') }}"></script>
+<script src="{{ mix('/js/custom-datetimepicker.js') }}"></script>--}}
+
 
 @section('scripts')
+@show
+<script>
+    @if (Session::has('message'))
+    showMessage('{{ session('messageType') }}', '{{ session('message') }}');
+    @endif
 
-    <script type="text/javascript">
-        var i = 0;
-        window.Echo.channel('sale-event')
-            .listen('SaleEvent', (data) => {
-                i++;
-                $("#notification").append('<div class="alert alert-success">' + i + '.' + data.title + '</div>');
-                console.log('sale-event ' + i)
-            });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var i = 0;
+    window.Echo.channel('sale-event')
+        .listen('SaleEvent', (data) => {
+            i++;
+            $("#notification").append('<div class="alert alert-success">' + i + '.' + data.title + '</div>');
+            console.log('sale-event ' + i)
+        });
 
-        window.Echo.channel('sale-event')
-            .listen('SaleEvent', (e) => {
-                console.log(e);
-            });
+    window.Echo.channel('sale-event')
+        .listen('SaleEvent', (e) => {
+            console.log(e);
+        });
 
-    </script>
-@endsection
+</script>
+</body>
+</html>

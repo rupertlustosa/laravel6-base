@@ -42,6 +42,12 @@
                         <span class="nav-label">Vendas</span>
                     </a>
                 </li>
+                <li class="{{ isActiveRoute('pointing.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('pointing.index') }}" target="_blank">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">Pontuar</span>
+                    </a>
+                </li>
             </ul>
 
             <form name="frm_new_users_notifications" id="frm_new_users_notifications">

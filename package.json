@@ -30,10 +30,13 @@
         "jquery-blockui": "^2.7.0",
         "jquery-mask-plugin": "^1.14.16",
         "laravel-echo": "^1.6.1",
+        "laravel-echo-server": "^1.6.0",
         "moment": "^2.24.0",
         "popper.js": "^1.16.0",
         "pusher-js": "^5.0.3",
         "select2": "^4.0.11",
+        "socket.io": "^2.3.0",
+        "socket.io-client": "^2.3.0",
         "toastr": "^2.1.4",
         "v-money": "^0.8.1",
         "vue-select": "^3.4.0"

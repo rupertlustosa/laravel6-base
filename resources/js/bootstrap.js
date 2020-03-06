@@ -25,6 +25,14 @@ window.Echo = new Echo({
     forceTLS: true,
 });*/
 
+import Echo from 'laravel-echo'
+
+window.io = require('socket.io-client');
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
+});
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

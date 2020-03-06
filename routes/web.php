@@ -11,6 +11,8 @@
 |
 */
 
+use App\Events\SaleEvent;
+
 Route::get('/', function () {
     return redirect()->to('/login');
 });
@@ -34,4 +36,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('login/{provider}', 'Auth\LoginSocialController@redirect');
 
 #Route::get('login/{provider}/callback','SocialController@Callback');
-Route::get('login/{provider}/callback','Auth\LoginSocialController@callback');
+Route::get('login/{provider}/callback', 'Auth\LoginSocialController@callback');
+
+Route::get('/t', function () {
+
+    //event(new \App\Events\SaleEvent());
+
+    broadcast(new SaleEvent());
+    dd('Event Run Successfully.');
+
+});

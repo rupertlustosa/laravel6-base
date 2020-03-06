@@ -15,6 +15,8 @@ mix.js('resources/js/app.js', 'public/js/app.js')
     .extract(['jquery', 'bootstrap', 'toastr'])
     .sourceMaps();
 
+mix.js('resources/js/laravel-echo-setup.js', 'public/js');
+
 mix.styles([
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/toastr/build/toastr.css',

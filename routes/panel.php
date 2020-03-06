@@ -31,8 +31,9 @@ Route::namespace('Panel')
         /* panel/roles */
         $panel->resource('roles', RoleController::class);
 
-    /* panel/sales */
+        /* panel/sales */
         $panel->resource('sales', SaleController::class);
+        $panel->get('pointing', 'SaleController@pointing')->name('pointing.index');
 
         # rotas para panel
     });

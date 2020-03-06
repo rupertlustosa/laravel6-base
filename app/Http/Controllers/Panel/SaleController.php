@@ -15,6 +15,7 @@ use App\Http\Requests\SaleUpdateRequest;
 use App\Models\Sale;
 use App\Services\SaleService;
 use App\Traits\LogActivity;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -119,7 +120,7 @@ class SaleController extends ApiBaseController
 
         try {
 
-            if (!\Auth::user()->can('delete', $sale)) {
+            if (!Auth::user()->can('delete', $sale)) {
 
                 return $this->sendUnauthorized();
             }
@@ -141,5 +142,21 @@ class SaleController extends ApiBaseController
         $this->authorize('update', $sale);
 
         return response()->json($sale, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function pointing(): View
+    {
+
+        $this->log(__METHOD__);
+
+        $this->authorize('viewAny', Sale::class);
+
+        $data = $this->service->paginate(20);
+
+        return view('panel.sales.pointing')
+            ->with([
+                'data' => $data,
+                'label' => $this->label,
+            ]);
     }
 }
