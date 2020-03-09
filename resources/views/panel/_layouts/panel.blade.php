@@ -82,7 +82,6 @@
 <script src="{{ mix('/js/vendor.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>
 <script src="{{ mix('/js/custom-masks.js') }}"></script>
-<script src="{{ mix('/js/moment.js') }}"></script>
 {{--<script src="{{ mix('/js/blockUI.js') }}"></script>--}}
 <script src="{{ mix('/js/functions.js') }}"></script>
 

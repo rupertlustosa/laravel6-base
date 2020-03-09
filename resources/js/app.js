@@ -20,7 +20,10 @@ window.Vue = require('vue');
 
 Vue.component('link-destroy-component', require('./components/LinkDestroyComponent').default);
 
-//Vue.component('select2-vue-component', require('./components/Select2VueComponent').default);
+Vue.component(
+    'nozzle-list-component',
+    require('./components/sales/NozzleListComponent').default
+);
 
 Vue.component(
     'passport-clients',

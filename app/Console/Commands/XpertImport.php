@@ -98,13 +98,34 @@ class XpertImport extends Command
             101112,
         ];
 
+        $fuel_pumps = [
+            [
+                'id' => 1,
+                'nozzles' => [1, 2, 3],
+            ],
+            [
+                'id' => 2,
+                'nozzles' => [4, 5, 6],
+            ],
+            [
+                'id' => 3,
+                'nozzles' => [7, 8, 9],
+            ],
+            [
+                'id' => 4,
+                'nozzles' => [10, 11, 12],
+            ]
+        ];
+
         for ($x = 1; $x <= 3; $x++) {
 
             $item = $products[rand(0, 3)];
 
             $sale = Str::uuid();
-            $fuel_pump = rand(1, 9);
-            $fuel_pump_nozzle = rand(1, 9);
+            $fuel_pump = $fuel_pumps[rand(0, (count($fuel_pumps) - 1))];
+            $nozzles = $fuel_pump['nozzles'];
+            $fuel_pump_nozzle = $nozzles[rand(0, (count($nozzles) - 1))];
+            //dd($fuel_pump, $nozzles, $fuel_pump_nozzle);
             $attendant = $attendants[rand(0, (count($attendants) - 1))];
             //$client = $customers[rand(0, (count($customers) - 1))];
             $client = null;
@@ -115,8 +136,7 @@ class XpertImport extends Command
             $value = $item_unit_price * $item_quantity;
             $date = now()->format('Y-m-dh:i:s');
 
-            $dataFromXpert = 'ABASTECIMENTO=(ID=' . $sale . ';DATAHORA=' . $date . 's;DURACAO=ssss;BOMBA=' . $fuel_pump . ';BICO=' . $fuel_pump_nozzle . ';PRECO=' . $item_unit_price . ';QUANTIDADE=' . $item_quantity . ';TOTAL=' . $value . ';TOTALVOL=vvvvvvvv.vvv;TOTALMON=mmmmmmmm.mmm;FUNCIONARIO=' . $attendant . ';CLIENTE=' . $client . ')';
-
+            $dataFromXpert = 'ABASTECIMENTO=(ID=' . $sale . ';DATAHORA=' . $date . 's;DURACAO=ssss;BOMBA=' . $fuel_pump['id'] . ';BICO=' . $fuel_pump_nozzle . ';PRECO=' . $item_unit_price . ';QUANTIDADE=' . $item_quantity . ';TOTAL=' . $value . ';TOTALVOL=vvvvvvvv.vvv;TOTALMON=mmmmmmmm.mmm;FUNCIONARIO=' . $attendant . ';CLIENTE=' . $client . ')';
 
             $dataIndexed = [];
 
@@ -196,7 +216,7 @@ class XpertImport extends Command
                     //TODO save in database invalid field
                 }
 
-                sleep((2 + $x));
+                //sleep((2 + $x));
             } else {
 
                 dd($dataFromXpert);

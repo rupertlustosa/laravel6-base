@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\DB;
 class SaleService
 {
 
+    public function paginate(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()->paginate($limit);
+    }
+
     private function buildQuery(): Builder
     {
 
@@ -46,16 +52,19 @@ class SaleService
         return $query->orderByDesc('id');
     }
 
-    public function paginate(int $limit): LengthAwarePaginator
-    {
-
-        return $this->buildQuery()->paginate($limit);
-    }
-
     public function all(): Collection
     {
 
         return $this->buildQuery()->get();
+    }
+
+    public function getSalesToPointing(): Collection
+    {
+
+        return $this->buildQuery()
+            ->whereNull('client')
+            //->where('date', '>=', now()->subMinutes(10))
+            ->get();
     }
 
     public function find(int $id): ?Sale
