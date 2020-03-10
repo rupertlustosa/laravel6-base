@@ -127,8 +127,8 @@ class XpertImport extends Command
             $fuel_pump_nozzle = $nozzles[rand(0, (count($nozzles) - 1))];
             //dd($fuel_pump, $nozzles, $fuel_pump_nozzle);
             $attendant = $attendants[rand(0, (count($attendants) - 1))];
-            //$client = $customers[rand(0, (count($customers) - 1))];
-            $client = null;
+            //$document_number = $customers[rand(0, (count($customers) - 1))];
+            $document_number = null;
             $item_quantity = rand(10, 30);
             $item_identification = $item['identification'];
             $item_name = $item['name'];
@@ -136,7 +136,7 @@ class XpertImport extends Command
             $value = $item_unit_price * $item_quantity;
             $date = now()->format('Y-m-dh:i:s');
 
-            $dataFromXpert = 'ABASTECIMENTO=(ID=' . $sale . ';DATAHORA=' . $date . 's;DURACAO=ssss;BOMBA=' . $fuel_pump['id'] . ';BICO=' . $fuel_pump_nozzle . ';PRECO=' . $item_unit_price . ';QUANTIDADE=' . $item_quantity . ';TOTAL=' . $value . ';TOTALVOL=vvvvvvvv.vvv;TOTALMON=mmmmmmmm.mmm;FUNCIONARIO=' . $attendant . ';CLIENTE=' . $client . ')';
+            $dataFromXpert = 'ABASTECIMENTO=(ID=' . $sale . ';DATAHORA=' . $date . 's;DURACAO=ssss;BOMBA=' . $fuel_pump['id'] . ';BICO=' . $fuel_pump_nozzle . ';PRECO=' . $item_unit_price . ';QUANTIDADE=' . $item_quantity . ';TOTAL=' . $value . ';TOTALVOL=vvvvvvvv.vvv;TOTALMON=mmmmmmmm.mmm;FUNCIONARIO=' . $attendant . ';CLIENTE=' . $document_number . ')';
 
             $dataIndexed = [];
 
@@ -202,7 +202,7 @@ class XpertImport extends Command
                         'fuel_pump' => $fuel_pump,
                         'fuel_pump_nozzle' => $fuel_pump_nozzle,
                         'attendant' => $attendant,
-                        'client' => null,
+                        'document_number' => null,
                         'item_identification' => null,
                         'item_name' => null,
                         'item_quantity' => $item_quantity,

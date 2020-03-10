@@ -35,5 +35,8 @@ Route::namespace('Panel')
         $panel->resource('sales', SaleController::class);
         $panel->get('pointing', 'SaleController@pointing')->name('pointing.index');
 
+        /* panel/settings */
+        $panel->resource('settings', SettingController::class);
+
         # rotas para panel
     });

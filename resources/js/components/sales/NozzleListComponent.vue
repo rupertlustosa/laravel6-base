@@ -1,12 +1,13 @@
 <template>
     <div class="panel panel-default">
         <div class="panel-body">
+            <h1 class="text-center" v-if="!this.$store.state.selectedNozzle">BICOS</h1>
             <div class="row" v-if="!this.$store.state.selectedNozzle">
                 <div class="col-12">
 
                     <a @click="selectNozzle(nozzle)"
                        class="col-sm-12 col-md-6 col-lg-2 btn btn-default btn-lg ml-3 mr-3 mb-3 mt-3"
-                       href="javascript:"
+                       :class="{'text-muted': nozzle.sales.length == 0}" href="javascript:"
                        role="button" v-for="(nozzle, index) in nozzles">
                         <span class="fa-stack fa-5x">
                             <!-- The icon that will wrap the number -->
@@ -15,7 +16,8 @@
                             <strong class="fa-stack-1x">
                                 {{ nozzle.name }}
                             </strong>
-                        </span>
+                        </span><br>
+                        <span class="badge badge-info" v-show="nozzle.sales.length > 0">{{ nozzle.sales.length }}</span>
                     </a>
                 </div>
             </div>
@@ -38,7 +40,7 @@
                                     <th>Abastecimento</th>
                                     <th>Atendente</th>
                                     <th style="width: 20%">Data</th>
-                                    <th style="width: 15%">Valor</th>
+                                    <th style="width: 15%">Valor total</th>
                                     <th style="width: 15%">Quantidade</th>
                                     <th style="width: 15%">V. Unitário</th>
                                 </tr>
@@ -54,7 +56,7 @@
                                         </a>
                                     </td>
                                     <td>{{ item.attendant }}</td>
-                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.date | dateTimeBr }}</td>
                                     <td>{{ item.value }}</td>
                                     <td>{{ item.item_quantity }}</td>
                                     <td>{{ item.item_unit_price }}</td>
@@ -76,6 +78,11 @@
 <script>
 
     import PointingDocumentNumberComponent from "./PointingDocumentNumberComponent";
+
+    /*jQuery('#searchDocumentNumber').on('shown.bs.modal', function () {
+        jQuery('#document_number').focus();
+        alert('jQuery');
+    });*/
 
     export default {
         name: "NozzleListComponent",
@@ -126,14 +133,20 @@
         created: function () {
 
             this.getData(1);
-            /*var self = this;
+            var self = this;
             setInterval(function () {
                 self.getData(1)
-            }, 1500);*/
+            }, 1250);
         }
     }
 </script>
 
 <style scoped>
+    .text-muted {
+        color: #ccc !important;
+    }
 
+    .btn-default {
+        border: none;
+    }
 </style>

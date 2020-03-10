@@ -22,6 +22,18 @@ class ApiBaseController extends Controller
      * success response method.
      *
      * @param array $result
+     * @return JsonResponse
+     */
+    public function sendSimpleJson(array $result = []): JsonResponse
+    {
+
+        return response()->json($result, Response::HTTP_OK);
+    }
+
+    /**
+     * success response method.
+     *
+     * @param array $result
      * @param string $message
      * @return JsonResponse
      */

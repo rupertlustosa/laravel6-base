@@ -2,7 +2,7 @@
 /**
  * @package    Controller
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       03/03/2020 10:10:33
+ * @date       10/03/2020 10:50:31
  */
 
 declare(strict_types=1);
@@ -13,7 +13,7 @@ use App\Traits\CreationDataTrait;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Sale extends Model
+class Setting extends Model
 {
 
     use CreationDataTrait;
@@ -24,23 +24,10 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
-        'sale',
-        'date',
+        'description',
+        'key',
         'value',
-        'fuel_pump',
-        'fuel_pump_nozzle',
-        'attendant',
-        'document_number',
-        'name',
-        'birth',
-        'phone',
-        'item_identification',
-        'item_name',
-        'item_quantity',
-        'item_unit_price',
     ];
-
-    protected $dates = ['date'];
 
     # Accessors & Mutators
 

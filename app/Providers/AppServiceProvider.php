@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\Role;
 use App\Models\Sale;
+use App\Models\Setting;
 use App\Models\User;
 use App\Observers\RoleObserver;
 use App\Observers\SaleObserver;
+use App\Observers\SettingObserver;
 use App\Observers\UserObserver;
 use Faker\Factory as FakerFactory;
 use Faker\Generator as FakerGenerator;
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Role::observe(RoleObserver::class);
         Sale::observe(SaleObserver::class);
+        Setting::observe(SettingObserver::class);
 
         $this->app->singleton(FakerGenerator::class, function () {
             return FakerFactory::create('pt_BR');

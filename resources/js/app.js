@@ -77,6 +77,38 @@ Vue.component(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/*Vue.filter('currencyDecimal', function (value) {
+    if (!value) return '-';
+    return value.toFixed(2)
+});*/
+Vue.filter('dateTimeBr', function (value) {
+    if (!value) return '';
+
+    let dateFormat = new Date(value);
+    let day = dateFormat.getDate().toString().padStart(2, '0');
+
+    return day +
+        '/' + (dateFormat.getMonth() + 1).toString().padStart(2, '0') +
+        '/' + dateFormat.getFullYear() +
+        ' ' +
+        dateFormat.getHours().toString().padStart(2, '0') +
+        ':' + dateFormat.getMinutes().toString().padStart(2, '0') +
+        ':' + dateFormat.getSeconds().toString().padStart(2, '0');
+});
+
+Vue.filter('dateBr', function (value) {
+
+    if (!value) return '';
+
+
+    let dateFormat = new Date(value);
+    let day = dateFormat.getDate().toString().padStart(2, '0');
+
+    return day +
+        '/' + (dateFormat.getMonth() + 1).toString().padStart(2, '0') +
+        '/' + dateFormat.getFullYear();
+});
+
 const app = new Vue({
     store,
     el: '#app',

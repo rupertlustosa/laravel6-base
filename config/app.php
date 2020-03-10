@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'showButtonsInModuleNavBar' => true,
+    'cache_time' => 24 * 60 * 60,
 
     /*
     |--------------------------------------------------------------------------

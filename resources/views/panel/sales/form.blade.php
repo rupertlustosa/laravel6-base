@@ -31,7 +31,7 @@
                         {{ csrf_field() }}
 
                         <!-- inicio dos campos -->
-                        
+
                             <div class="form-row">
                                 <div class="form-group col-md-6 @if ($errors->has('sale')) has-error @endif">
                                     <label for="sale">Venda</label>
@@ -83,23 +83,25 @@
                                 <div class="form-group col-md-6 @if ($errors->has('attendant')) has-error @endif">
                                     <label for="attendant">Atendente</label>
                                     <input type="text" name="attendant" id="attendant" class="form-control"
-                                    		value="{{ old('attendant', (isset($item) ? $item->attendant : '')) }}">
+                                           value="{{ old('attendant', (isset($item) ? $item->attendant : '')) }}">
                                     {!! $errors->first('attendant','<span class="help-block m-b-none">:message</span>') !!}
                                 </div>
 
-                                <div class="form-group col-md-6 @if ($errors->has('client')) has-error @endif">
-                                    <label for="client">Cliente</label>
-                                    <input type="text" name="client" id="client" class="form-control"
-                                    		value="{{ old('client', (isset($item) ? $item->client : '')) }}">
-                                    {!! $errors->first('client','<span class="help-block m-b-none">:message</span>') !!}
+                                <div class="form-group col-md-6 @if ($errors->has('document_number')) has-error @endif">
+                                    <label for="document_number">Cliente</label>
+                                    <input type="text" name="document_number" id="document_number" class="form-control"
+                                           value="{{ old('document_number', (isset($item) ? $item->document_number : '')) }}">
+                                    {!! $errors->first('document_number','<span class="help-block m-b-none">:message</span>') !!}
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6 @if ($errors->has('item_identification')) has-error @endif">
+                                <div
+                                    class="form-group col-md-6 @if ($errors->has('item_identification')) has-error @endif">
                                     <label for="item_identification">Identificação do Produto</label>
-                                    <input type="text" name="item_identification" id="item_identification" class="form-control"
-                                    		value="{{ old('item_identification', (isset($item) ? $item->item_identification : '')) }}">
+                                    <input type="text" name="item_identification" id="item_identification"
+                                           class="form-control"
+                                           value="{{ old('item_identification', (isset($item) ? $item->item_identification : '')) }}">
                                     {!! $errors->first('item_identification','<span class="help-block m-b-none">:message</span>') !!}
                                 </div>
 
@@ -136,8 +138,8 @@
                                 </div>
 
                             </div>
-                            
-                        <!-- fim dos campos -->
+
+                            <!-- fim dos campos -->
 
                             <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}">
                             <button class="btn btn-primary" id="bt_salvar" type="submit"

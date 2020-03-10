@@ -15,9 +15,40 @@
                             <div class="form-group col-md-12">
                                 <the-mask :mask="maskDocumentNumber" :masked="masked" @keyup.native="search"
                                           class="form-control" placeholder="Entre com o CPF"
+                                          id="document_number"
                                           type="tel" v-model="document_number"></the-mask>
                                 <form-error-component :errors="errors" v-if="errors.document_number">
                                     {{ errors.document_number[0] }}
+                                </form-error-component>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <!--<label>Nome do Cliente</label>-->
+                                <input class="form-control" placeholder="Nome do Cliente"
+                                       type="text"
+                                       v-model="name">
+                                <form-error-component :errors="errors" v-if="errors.name">
+                                    {{ errors.name[0] }}
+                                </form-error-component>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <!--<label>Data de Nascimento</label>-->
+                                <the-mask :mask="maskBirth" :masked="masked" class="form-control"
+                                          placeholder="Data de Nascimento"
+                                          type="tel" v-model="birth"></the-mask>
+                                <form-error-component :errors="errors" v-if="errors.birth">
+                                    {{ errors.birth[0] }}
+                                </form-error-component>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <!--<label>Telefone</label>-->
+                                <the-mask :mask="maskPhone" :masked="masked" class="form-control"
+                                          placeholder="Telefone"
+                                          type="tel" v-model="phone"></the-mask>
+                                <form-error-component :errors="errors" v-if="errors.phone">
+                                    {{ errors.phone[0] }}
                                 </form-error-component>
                             </div>
 
@@ -46,9 +77,14 @@
         data() {
             return {
                 document_number: '',
+                name: '',
+                birth: '',
+                phone: '',
                 errors: {},
                 masked: true,
+                maskPhone: '(##)#####-####',
                 maskDocumentNumber: '###.###.###-##',
+                maskBirth: '##/##/####',
                 showButtonCreate: false,
             }
         },
@@ -57,11 +93,13 @@
 
                 this.$loading(true);
 
-                alert(this.$store.state.selectedSale.id);
-
-                axios.request('/api/sale/' + this.$store.state.selectedSale.id, {
+                /*axios.request('/api/save/sale/' + this.$store.state.selectedSale.id, {
                     method: 'POST',
                     params: {document_number: this.document_number},
+                })*/
+                axios.post('/api/save/sale/' + this.$store.state.selectedSale.id, {
+                    document_number: this.document_number,
+                    _method: 'PUT'
                 })
                     .then(response => {
 
@@ -114,6 +152,7 @@
 
                     } else {
                         alert('O CPF informado é inválido');
+                        this.document_number = '';
                     }
                 }
 

@@ -105,7 +105,7 @@
                                                 </td>
                                                 <td>
                                                     Atendente: {{ $item->attendant }}<br>
-                                                    Cliente: {{ $item->client }}
+                                                    Cliente: {{ $item->document_number }}
                                                 </td>
                                                 <td>{{ $item->synced_at ? $item->synced_at->format('d/m/Y H:i:s') : '' }}</td>
                                                 {{--<td class="hidden-xs hidden-sm"

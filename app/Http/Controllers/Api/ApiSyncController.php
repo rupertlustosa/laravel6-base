@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\OfferResource;
 use App\Http\Resources\SaleResource;
+use App\Models\Sale;
+use App\Models\Setting;
 use App\Services\OfferService;
 use App\Services\SaleService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class ApiSyncController extends ApiBaseController
 {
@@ -31,6 +35,23 @@ class ApiSyncController extends ApiBaseController
             $sales = [];
             $groupByField = 'fuel_pump_nozzle';
 
+            $settings = Cache::remember('settings', config('app.cache_time'), function () {
+
+                return Setting::all();
+            });
+
+            $numberOfNozzles = $settings->where('key', 'NOZZLE_NUMBER')->first();
+
+            if ($numberOfNozzles->value) {
+
+                for ($x = 1; $x <= $numberOfNozzles->value; $x++) {
+
+                    $groupBy[] = $x;
+                }
+            }
+
+            //dd($settings->where('key', 'NOZZLE_NUMBER')->first());
+
             foreach ($data as $sale) {
 
                 if (!in_array($sale->{$groupByField}, $groupBy)) {
@@ -47,7 +68,7 @@ class ApiSyncController extends ApiBaseController
 
                 $dataToSend[] = [
                     'name' => $field,
-                    'sales' => SaleResource::collection($sales[$field]),
+                    'sales' => isset($sales[$field]) ? SaleResource::collection($sales[$field]) : [],
                 ];
             }
 
@@ -66,4 +87,46 @@ class ApiSyncController extends ApiBaseController
             return $this->sendError('Server Error.', $exception);
         }
     }
+
+    /**
+     * Update.
+     *
+     * @param Sale $sale
+     * @return JsonResponse
+     */
+    public function save(Sale $sale)
+    {
+        try {
+
+            if (!empty($sale->document_number)) {
+
+                return $this->sendUnauthorized();
+            }
+
+            $birth = request('birth') ?? null;
+            if ($birth) {
+
+                try {
+
+                    $birth = Carbon::createFromFormat('d/m/y', $birth)->format('Y-m-d');
+                } catch (Exception $exception) {
+                    $birth = null;
+                }
+            }
+
+            $sale->document_number = request('document_number');
+            $sale->name = request('name') ?? null;
+            $sale->birth = $birth;
+            $sale->phone = request('phone') ?? null;
+            $sale->save();
+
+            return $this->sendSimpleJson();
+
+        } catch (Exception $e) {
+
+            return $this->sendError('Server Error.', $e);
+
+        }
+    }
+
 }

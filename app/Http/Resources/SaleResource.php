@@ -31,7 +31,7 @@ class SaleResource extends JsonResource
             'fuel_pump' => (string)$this->fuel_pump,
             'fuel_pump_nozzle' => (string)$this->fuel_pump_nozzle,
             'attendant' => (string)$this->attendant,
-            'client' => (string)$this->client,
+            'document_number' => (string)$this->document_number,
             'item_identification' => (string)$this->item_identification,
             'item_quantity' => (string)$this->item_quantity,
             'item_unit_price' => (string)$this->item_unit_price,
