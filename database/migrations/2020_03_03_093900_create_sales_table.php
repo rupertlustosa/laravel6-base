@@ -20,11 +20,14 @@ class CreateSalesTable extends Migration
             $table->string('fuel_pump')->nullable();
             $table->string('fuel_pump_nozzle')->nullable();
             $table->string('attendant')->nullable();
-            $table->string('client')->nullable();
+            $table->string('document_number')->nullable();
+            $table->string('name')->nullable();
+            $table->date('birth')->nullable();
+            $table->string('phone')->nullable();
             $table->string('item_identification')->nullable();
             $table->string('item_name')->nullable();
             $table->float('item_quantity')->nullable();
-            $table->float('item_unit_price')->nullable();;
+            $table->float('item_unit_price')->nullable();
             $table->dateTime('synced_at')->nullable()->index('sales_synced_at');
             $table->timestamps();
         });
