@@ -51,6 +51,14 @@ class ApiSyncController extends ApiBaseController
                 ];
             }
 
+            if (count($dataToSend)) {
+
+                usort($dataToSend, function ($item1, $item2) {
+
+                    return $item1['name'] <=> $item2['name'];
+                });
+            }
+
             return $this->sendResponse($dataToSend);
 
         } catch (Exception $exception) {

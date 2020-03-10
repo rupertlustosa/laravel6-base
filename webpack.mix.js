@@ -20,6 +20,7 @@ mix.js('resources/js/laravel-echo-setup.js', 'public/js');
 mix.styles([
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/toastr/build/toastr.css',
+    'node_modules/vue-awesome-notifications/dist/styles/style.css',
 ], 'public/css/app.css')
     .sourceMaps();
 

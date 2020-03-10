@@ -7,8 +7,39 @@
 require('./bootstrap');
 
 import TDate from './boot-vue-functions'
+import store from "./store";
+import VueLoading from 'vuejs-loading-plugin';
+import VueAWN from "vue-awesome-notifications";
 
 window.Vue = require('vue');
+Vue.use(VueLoading, {
+    dark: false, // default false
+    text: 'Carregando...', // default 'Loading'
+    loading: false, // default false
+    //customLoader: myVueComponent, // replaces the spinner and text with your own
+    //background: 'rgb(47, 64, 80)', // set custom background
+    classes: ['loading-screen-inspinia', 'animated', 'fadeIn'] // array, object or string
+});
+
+let optionsVueAWN = {
+    position: "top-right",
+    clean: true,
+    labels: {
+        tip: '',
+        info: '',
+        success: '',
+        warning: '',
+        alert: '',
+        async: 'Loading',
+        confirm: 'Confirmation required',
+    },
+    icons: {
+        enabled: false,
+    }
+    //durations: {success: 0}
+};
+
+Vue.use(VueAWN, optionsVueAWN);
 
 /**
  * The following block of code may be used to automatically register your
@@ -47,6 +78,7 @@ Vue.component(
  */
 
 const app = new Vue({
+    store,
     el: '#app',
     methods: {
         dateFormatBR: TDate.dateBR,
