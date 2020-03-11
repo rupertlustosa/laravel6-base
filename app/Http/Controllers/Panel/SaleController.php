@@ -52,6 +52,38 @@ class SaleController extends ApiBaseController
             ]);
     }
 
+    public function salesSynced(): View
+    {
+
+        $this->log(__METHOD__);
+
+        $this->authorize('viewAny', Sale::class);
+
+        $data = $this->service->paginateSynced(20);
+
+        return view('panel.sales.index')
+            ->with([
+                'data' => $data,
+                'label' => $this->label . ' - Sincronizadas',
+            ]);
+    }
+
+    public function salesNotSynced(): View
+    {
+
+        $this->log(__METHOD__);
+
+        $this->authorize('viewAny', Sale::class);
+
+        $data = $this->service->paginateNotSynced(20);
+
+        return view('panel.sales.index')
+            ->with([
+                'data' => $data,
+                'label' => $this->label . ' - Pendentes de Sincronização',
+            ]);
+    }
+
     public function create(): View
     {
 

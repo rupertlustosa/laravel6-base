@@ -101,10 +101,6 @@
 
                 this.$loading(true);
 
-                /*axios.request('/api/save/sale/' + this.$store.state.selectedSale.id, {
-                    method: 'POST',
-                    params: {document_number: this.document_number},
-                })*/
                 axios.post('/api/save/sale/' + this.$store.state.selectedSale.id, {
                     document_number: this.document_number,
                     _method: 'PUT'
@@ -147,23 +143,6 @@
                 this.showButtonCreate = false;
                 this.errors = {};
 
-                /*if (length == 14) {
-
-                    if (this.validateDocumentNumber()) {
-
-                        this.showButtonCreate = true;
-
-                        if (confirm('Confirma pontuar para esse CPF')) {
-
-                            this.save();
-                        }
-
-                    } else {
-                        alert('O CPF informado é inválido');
-                        this.document_number = '';
-                    }
-                }*/
-
                 if (length == 14) {
 
                     if (this.validateDocumentNumber()) {
@@ -176,15 +155,6 @@
                         }*/
                         this.$loading(true);
 
-                        /*var config = {
-                            headers: {
-                                "Access-Control-Allow-Origin": "*",
-                                "Access-Control-Allow-Headers": "Authorization",
-                                "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
-                                "Content-Type": "application/json;charset=UTF-8"
-                            }
-                        };*/
-
                         axios.get(this.$store.state.apiUrl + '/api/sync/user/document-number/' + this.document_number)
                             .then(response => {
                                 let message = null;
@@ -194,16 +164,8 @@
                                     this.name = data.name;
                                     this.birth = data.birth;
                                     this.phone = data.phone;
-                                    //message = 'Esse CPF já existe em nosso sistema!';
-
-                                    console.log(data, data.name)
-
-                                } else {
-
-                                    //message = 'Novo usuário!';
+                                    //console.log(data, data.name)
                                 }
-
-                                //this.$awn.alert(message);
                             })
                             .catch(error => {
 
@@ -214,7 +176,7 @@
                                     this.errors = error.response.data.errors;
                                 } else {
 
-                                    let message = '[' + error.response.status + '] ' + this.$root.$t('messages.server_error');
+                                    let message = '[' + error.response.status + '] ' + 'Erro no servidor';
                                     this.$awn.alert(message);
                                 }
 

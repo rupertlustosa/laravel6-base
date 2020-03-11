@@ -21,7 +21,7 @@
                     <div class="ibox-title">
 
                         <h5 v-if="{{ config('app.showButtonsInModuleNavBar') ? 'true' : 'false' }}">
-                            @yield('_titulo_pagina_')
+                            Lista de vendas
                         </h5>
 
                         <div v-if="{{ config('app.showButtonsInModuleNavBar') ? 'false' : 'true' }}" class="ibox-tools">

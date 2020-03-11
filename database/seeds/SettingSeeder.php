@@ -29,12 +29,12 @@ class SettingSeeder extends Seeder
                 "id" => 2,
                 "description" => "URL do Projeto WEB",
                 "key" => "API_URL",
-                "value" => "http://dev.smartercode.programa-de-fidelidade/",
+                "value" => "https://betaprogramadefidelidade.smartercode.com.br",
+                //"value" => "http://dev.smartercode.programa-de-fidelidade",
             ),
         );
 
-
-        foreach ($itens as $item) {
+        foreach ($settings as $item) {
 
             Setting::create($item);
         }

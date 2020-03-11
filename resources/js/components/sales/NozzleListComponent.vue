@@ -108,15 +108,15 @@
                     })
                     .then(() => {
 
-                        console.log(this.nozzles);
+                        //console.log(this.nozzles);
                     });
             },
-            getApiData() {
+            getApiSettings() {
 
                 axios.get("/api/settings")
                     .then((response) => {
                         let data = response.data;
-                        console.log(data);
+                        //console.log(data);
                         this.$store.commit('setApiUrl', data.API_URL);
                     })
                     .catch(error => {
@@ -145,16 +145,15 @@
         },
         mounted() {
 
-            this.getData(1);
-            this.getApiData();
+            this.getData();
+            this.getApiSettings();
         },
         created: function () {
 
-            this.getData(1);
             var self = this;
             setInterval(function () {
-                self.getData(1)
-            }, 1250);
+                self.getData()
+            }, 10250);
         }
     }
 </script>

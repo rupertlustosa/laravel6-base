@@ -40,7 +40,7 @@ class Sale extends Model
         'item_unit_price',
     ];
 
-    protected $dates = ['date'];
+    protected $dates = ['date', 'synced_at'];
 
     # Accessors & Mutators
 

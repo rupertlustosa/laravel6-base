@@ -36,12 +36,36 @@
                         <span class="nav-label">Usuários</span>
                     </a>
                 </li>
+                <li class="dropdown {{ isActiveRoute('sales.*') }}">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
+                       data-toggle="dropdown">
+                        <i class="fa fa-th-list"></i>
+                        Vendas
+                    </a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="{{ route('sales.index') }}">Vendas</a></li>
+                        <li><a href="{{ route('sales.synced') }}">Sincronizadas</a></li>
+                        <li><a href="{{ route('sales.not-synced') }}">Pendentes de Sincronização</a></li>
+                    </ul>
+                </li>
+                {{--<li class="{{ isActiveRoute('sales.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('sales.index') }}">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">Vendas (todas)</span>
+                    </a>
+                </li>
                 <li class="{{ isActiveRoute('sales.*') }}">
                     <a aria-expanded="false" role="button" href="{{ route('sales.index') }}">
                         <i class="fa fa-users"></i>
-                        <span class="nav-label">Vendas</span>
+                        <span class="nav-label">Vendas (Sincronizadas)</span>
                     </a>
                 </li>
+                <li class="{{ isActiveRoute('sales.*') }}">
+                    <a aria-expanded="false" role="button" href="{{ route('sales.index') }}">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">Vendas (Não sincronizadas)</span>
+                    </a>
+                </li>--}}
                 <li class="{{ isActiveRoute('pointing.*') }}">
                     <a aria-expanded="false" role="button" href="{{ route('pointing.index') }}" target="_blank">
                         <i class="fa fa-users"></i>

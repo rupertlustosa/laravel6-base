@@ -28,6 +28,23 @@ class SaleService
         return $this->buildQuery()->paginate($limit);
     }
 
+    public function paginateSynced(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()
+            ->whereNotNull('synced_at')
+            ->paginate($limit);
+    }
+
+    public function paginateNotSynced(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()
+            ->whereNull('synced_at')
+            ->whereNotNull('document_number')
+            ->paginate($limit);
+    }
+
     private function buildQuery(): Builder
     {
 
