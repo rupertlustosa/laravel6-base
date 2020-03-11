@@ -34,6 +34,7 @@ Route::namespace('Panel')
         /* panel/sales */
         $panel->resource('sales', SaleController::class);
         $panel->get('pointing', 'SaleController@pointing')->name('pointing.index');
+        $panel->get('test-sync/{sale}', 'SaleController@testSync');
 
         /* panel/settings */
         $panel->resource('settings', SettingController::class);

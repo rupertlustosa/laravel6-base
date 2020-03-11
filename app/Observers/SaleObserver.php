@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\Sale;
+use App\Services\SaleService;
 
 class SaleObserver
 {
@@ -17,7 +18,7 @@ class SaleObserver
     /**
      * Handle the sale "creating" event.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param Sale $sale
      * @return void
      */
     public function creating(Sale $sale)
@@ -30,19 +31,22 @@ class SaleObserver
     /**
      * Handle the sale "updating" event.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param Sale $sale
      * @return void
      */
     public function updating(Sale $sale)
     {
 
-    }
+        if (empty($sale->getOriginal('document_number')) && !empty($sale->document_number) && empty($sale->synced_at)) {
 
+            (new SaleService())->syncToWeb($sale);
+        }
+    }
 
     /**
      * Handle the sale "deleting" event.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param Sale $sale
      * @return void
      */
     public function deleting(Sale $sale)

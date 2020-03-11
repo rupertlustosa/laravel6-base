@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\OfferResource;
 use App\Http\Resources\SaleResource;
 use App\Models\Sale;
-use App\Models\Setting;
 use App\Services\OfferService;
 use App\Services\SaleService;
+use App\Services\SettingService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 
 class ApiSyncController extends ApiBaseController
 {
@@ -35,10 +34,7 @@ class ApiSyncController extends ApiBaseController
             $sales = [];
             $groupByField = 'fuel_pump_nozzle';
 
-            $settings = Cache::remember('settings', config('app.cache_time'), function () {
-
-                return Setting::all();
-            });
+            $settings = (new SettingService())->settings();
 
             $numberOfNozzles = $settings->where('key', 'NOZZLE_NUMBER')->first();
 
@@ -121,6 +117,25 @@ class ApiSyncController extends ApiBaseController
             $sale->save();
 
             return $this->sendSimpleJson();
+
+        } catch (Exception $e) {
+
+            return $this->sendError('Server Error.', $e);
+
+        }
+    }
+
+    /**
+     * Get settings.
+     *
+     * @param SettingService $settingService
+     * @return JsonResponse
+     */
+    public function settings(SettingService $settingService)
+    {
+        try {
+
+            return $this->sendSimpleJson($settingService->all()->pluck('value', 'key')->toArray());
 
         } catch (Exception $e) {
 

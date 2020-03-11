@@ -96,6 +96,12 @@ Vue.filter('dateTimeBr', function (value) {
         ':' + dateFormat.getSeconds().toString().padStart(2, '0');
 });
 
+Vue.filter('moeda', function (value) {
+    if (!value) return '0,00';
+
+    return parseFloat(value).toLocaleString('pt-BR');
+});
+
 Vue.filter('dateBr', function (value) {
 
     if (!value) return '';

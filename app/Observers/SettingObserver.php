@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Models\Role;
+use App\Models\Setting;
 use Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,10 +19,10 @@ class SettingObserver
     /**
      * Handle the role "created" event.
      *
-     * @param Role $role
+     * @param Setting $setting
      * @return void
      */
-    public function created(Role $role)
+    public function created(Setting $setting)
     {
 
         Cache::forget('settings');
@@ -32,10 +32,10 @@ class SettingObserver
     /**
      * Handle the role "updated" event.
      *
-     * @param Role $role
+     * @param Setting $setting
      * @return void
      */
-    public function updated(Role $role)
+    public function updated(Setting $setting)
     {
 
         Cache::forget('settings');
@@ -45,10 +45,10 @@ class SettingObserver
     /**
      * Handle the role "deleted" event.
      *
-     * @param Role $role
+     * @param Setting $setting
      * @return void
      */
-    public function deleted(Role $role)
+    public function deleted(Setting $setting)
     {
 
         Cache::forget('settings');

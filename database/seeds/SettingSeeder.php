@@ -18,7 +18,21 @@ class SettingSeeder extends Seeder
     public function run()
     {
 
-        $itens = [];
+        $settings = array(
+            array(
+                "id" => 1,
+                "description" => "Número de bicos",
+                "key" => "NOZZLE_NUMBER",
+                "value" => "15",
+            ),
+            array(
+                "id" => 2,
+                "description" => "URL do Projeto WEB",
+                "key" => "API_URL",
+                "value" => "http://dev.smartercode.programa-de-fidelidade/",
+            ),
+        );
+
 
         foreach ($itens as $item) {
 

@@ -159,4 +159,11 @@ class SaleController extends ApiBaseController
                 'label' => $this->label,
             ]);
     }
+
+    public function testSync(Sale $sale)
+    {
+
+        $response = $this->service->syncToWeb($sale);
+        return response()->json($response, 200, [], JSON_PRETTY_PRINT);
+    }
 }

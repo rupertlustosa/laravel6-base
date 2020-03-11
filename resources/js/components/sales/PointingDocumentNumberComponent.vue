@@ -22,40 +22,41 @@
                                 </form-error-component>
                             </div>
 
-                            <div class="form-group col-md-12">
-                                <!--<label>Nome do Cliente</label>-->
-                                <input class="form-control" placeholder="Nome do Cliente"
-                                       type="text"
-                                       v-model="name">
-                                <form-error-component :errors="errors" v-if="errors.name">
-                                    {{ errors.name[0] }}
-                                </form-error-component>
-                            </div>
+                            <template v-if="showButtonCreate">
+                                <div class="form-group col-md-12">
+                                    <label>Nome do Cliente</label>
+                                    <input class="form-control" placeholder=""
+                                           type="text"
+                                           v-model="name">
+                                    <form-error-component :errors="errors" v-if="errors.name">
+                                        {{ errors.name[0] }}
+                                    </form-error-component>
+                                </div>
 
-                            <div class="form-group col-md-12">
-                                <!--<label>Data de Nascimento</label>-->
-                                <the-mask :mask="maskBirth" :masked="masked" class="form-control"
-                                          placeholder="Data de Nascimento"
-                                          type="tel" v-model="birth"></the-mask>
-                                <form-error-component :errors="errors" v-if="errors.birth">
-                                    {{ errors.birth[0] }}
-                                </form-error-component>
-                            </div>
+                                <div class="form-group col-md-12">
+                                    <label>Data de Nascimento</label>
+                                    <the-mask :mask="maskBirth" :masked="masked" class="form-control"
+                                              placeholder=""
+                                              type="tel" v-model="birth"></the-mask>
+                                    <form-error-component :errors="errors" v-if="errors.birth">
+                                        {{ errors.birth[0] }}
+                                    </form-error-component>
+                                </div>
 
-                            <div class="form-group col-md-12">
-                                <!--<label>Telefone</label>-->
-                                <the-mask :mask="maskPhone" :masked="masked" class="form-control"
-                                          placeholder="Telefone"
-                                          type="tel" v-model="phone"></the-mask>
-                                <form-error-component :errors="errors" v-if="errors.phone">
-                                    {{ errors.phone[0] }}
-                                </form-error-component>
-                            </div>
-
+                                <div class="form-group col-md-12">
+                                    <label>Telefone</label>
+                                    <the-mask :mask="maskPhone" :masked="masked" class="form-control"
+                                              placeholder=""
+                                              type="tel" v-model="phone"></the-mask>
+                                    <form-error-component :errors="errors" v-if="errors.phone">
+                                        {{ errors.phone[0] }}
+                                    </form-error-component>
+                                </div>
+                            </template>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button @click="document_number=''" class="btn btn-secondary" data-dismiss="modal"
+                        <button @click="clearFields" class="btn btn-secondary" data-dismiss="modal"
                                 type="button">
                             Cancelar
                         </button>
@@ -89,6 +90,13 @@
             }
         },
         methods: {
+            clearFields() {
+
+                this.document_number = '';
+                this.name = '';
+                this.birth = '';
+                this.phone = '';
+            },
             save() {
 
                 this.$loading(true);
@@ -139,7 +147,7 @@
                 this.showButtonCreate = false;
                 this.errors = {};
 
-                if (length == 14) {
+                /*if (length == 14) {
 
                     if (this.validateDocumentNumber()) {
 
@@ -149,6 +157,73 @@
 
                             this.save();
                         }
+
+                    } else {
+                        alert('O CPF informado é inválido');
+                        this.document_number = '';
+                    }
+                }*/
+
+                if (length == 14) {
+
+                    if (this.validateDocumentNumber()) {
+
+                        this.showButtonCreate = true;
+
+                        /*if (confirm('Confirma pontuar para esse CPF')) {
+
+                            this.save();
+                        }*/
+                        this.$loading(true);
+
+                        /*var config = {
+                            headers: {
+                                "Access-Control-Allow-Origin": "*",
+                                "Access-Control-Allow-Headers": "Authorization",
+                                "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+                                "Content-Type": "application/json;charset=UTF-8"
+                            }
+                        };*/
+
+                        axios.get(this.$store.state.apiUrl + '/api/sync/user/document-number/' + this.document_number)
+                            .then(response => {
+                                let message = null;
+                                if (_.has(response, 'data.data.id')) {
+
+                                    let data = response.data.data;
+                                    this.name = data.name;
+                                    this.birth = data.birth;
+                                    this.phone = data.phone;
+                                    //message = 'Esse CPF já existe em nosso sistema!';
+
+                                    console.log(data, data.name)
+
+                                } else {
+
+                                    //message = 'Novo usuário!';
+                                }
+
+                                //this.$awn.alert(message);
+                            })
+                            .catch(error => {
+
+                                this.errors = {};
+
+                                if (_.has(error, 'response.data.errors')) {
+
+                                    this.errors = error.response.data.errors;
+                                } else {
+
+                                    let message = '[' + error.response.status + '] ' + this.$root.$t('messages.server_error');
+                                    this.$awn.alert(message);
+                                }
+
+                                console.log(error);
+                            })
+                            .then(() => {
+
+                                this.$loading(false);
+                            });
 
                     } else {
                         alert('O CPF informado é inválido');

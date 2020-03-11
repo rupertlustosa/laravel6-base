@@ -37,12 +37,12 @@
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Abastecimento</th>
+                                    <th style="width: 210px">Abastecimento</th>
                                     <th>Atendente</th>
-                                    <th style="width: 20%">Data</th>
                                     <th style="width: 15%">Valor total</th>
                                     <th style="width: 15%">Quantidade</th>
                                     <th style="width: 15%">V. Unitário</th>
+                                    <th style="width: 20%">Data</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,10 +56,10 @@
                                         </a>
                                     </td>
                                     <td>{{ item.attendant }}</td>
-                                    <td>{{ item.date | dateTimeBr }}</td>
-                                    <td>{{ item.value }}</td>
+                                    <td>R$ {{ item.value | moeda }}</td>
                                     <td>{{ item.item_quantity }}</td>
-                                    <td>{{ item.item_unit_price }}</td>
+                                    <td>R$ {{ item.item_unit_price | moeda }}</td>
+                                    <td>{{ item.date | dateTimeBr }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -111,6 +111,23 @@
                         console.log(this.nozzles);
                     });
             },
+            getApiData() {
+
+                axios.get("/api/settings")
+                    .then((response) => {
+                        let data = response.data;
+                        console.log(data);
+                        this.$store.commit('setApiUrl', data.API_URL);
+                    })
+                    .catch(error => {
+
+                        console.log(error);
+                    })
+                    .then(() => {
+
+                        console.log(this.nozzles);
+                    });
+            },
             selectNozzle(nozzle) {
 
                 console.log('>>>>>>>', nozzle);
@@ -129,6 +146,7 @@
         mounted() {
 
             this.getData(1);
+            this.getApiData();
         },
         created: function () {
 

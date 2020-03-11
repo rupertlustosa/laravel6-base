@@ -10,10 +10,14 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Sale;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Psr\Http\Message\ResponseInterface;
+use stdClass;
 
 class SaleService
 {
@@ -111,5 +115,58 @@ class SaleService
             ->pluck('name', 'id')
             ->toArray();
         //});
+    }
+
+    public function syncToWeb(Sale $sale)
+    {
+
+        if ($sale->synced_at) {
+
+            $response = new stdClass();
+            $response->success = false;
+            $response->message = 'Já sincronizada!';
+
+            return $response;
+        }
+        $settings = (new SettingService())->settings();
+        $apiUrl = $settings->where('key', 'API_URL')->first();
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => $apiUrl->value,
+            //'base_uri' => 'https://betaprogramadefidelidade.smartercode.com.br',
+            // You can set any number of default request options.
+            'timeout' => 5.0,
+        ]);
+        //dd($apiUrl->value);
+        //$url = 'https://betaprogramadefidelidade.smartercode.com.br/api/sync/sale/pointing/' . $sale->sale;
+        //$url = 'https://betaprogramadefidelidade.smartercode.com.br/api/sync/sale/pointing/' . $sale->sale;
+        //$client = new Client();
+        $promise = $client->postAsync('/api/sync/sale/pointing/' . $sale->sale, $sale->toArray())
+            //$promise = $client->postAsync('/api/sync/sale/pointing/' . $sale->sale, $sale->toArray())
+            ->then(
+                function (ResponseInterface $res) {
+                    $response = json_decode($res->getBody()->getContents());
+
+                    return $response;
+                },
+                function (RequestException $e) {
+                    $response = new stdClass();
+                    $response->success = false;
+                    $response->message = $e->getMessage();
+
+                    return $response;
+                }
+            );
+
+        $response = $promise->wait();
+
+        if (isset($response->success) && $response->success == true) {
+
+            $sale->synced_at = now();
+            $sale->save();
+        }
+
+        return $response;
     }
 }

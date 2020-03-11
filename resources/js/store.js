@@ -8,24 +8,28 @@ export default new Vuex.Store({
     state: {
         selectedNozzle: null,
         selectedSale: null,
+        apiUrl: null,
     },
     mutations: {
         setSelectedNozzle(state, nozzle) {
             state.selectedNozzle = nozzle;
-            console.log('setSelectedNozzle = ', state.selectedNozzle.name);
+            console.log('# Store # setSelectedNozzle = ', state.selectedNozzle.name);
         },
         clearSelectedNozzle(state) {
             state.selectedNozzle = null;
-            console.log('setSelectedNozzle = ', state.selectedNozzle);
+            console.log('# Store # clearSelectedNozzle = ', state.selectedNozzle);
         },
         setSelectedSale(state, sale) {
-            console.log(sale);
             state.selectedSale = sale;
-            console.log('setSelectedSale = ', state.selectedSale.id);
+            console.log('# Store # setSelectedSale = ', state.selectedSale.id);
         },
         clearSelectedSale(state) {
             state.selectedSale = null;
-            console.log('clearSelectedSale = ', state.selectedSale);
+            console.log('# Store # clearSelectedSale = ', state.selectedSale);
+        },
+        setApiUrl(state, apiUrl) {
+            state.apiUrl = apiUrl;
+            console.log('# Store # setApiUrl = ', state.apiUrl);
         },
     },
     actions: {}

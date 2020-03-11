@@ -117,7 +117,7 @@ class XpertImport extends Command
             ]
         ];
 
-        for ($x = 1; $x <= 3; $x++) {
+        for ($x = 1; $x <= 8; $x++) {
 
             $item = $products[rand(0, 3)];
 
@@ -216,7 +216,7 @@ class XpertImport extends Command
                     //TODO save in database invalid field
                 }
 
-                //sleep((2 + $x));
+                sleep((1 + $x));
             } else {
 
                 dd($dataFromXpert);

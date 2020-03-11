@@ -13,6 +13,7 @@ use App\Models\Setting;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SettingService
@@ -92,5 +93,14 @@ class SettingService
             ->pluck('name', 'id')
             ->toArray();
         //});
+    }
+
+    public function settings()
+    {
+
+        return Cache::remember('settings', config('app.cache_time'), function () {
+
+            return Setting::all();
+        });
     }
 }

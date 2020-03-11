@@ -22,6 +22,7 @@ Route::middleware('auth:api')->namespace('Api')->group(function ($api) {
 
     $api->get('home', 'ApiHomeController@index');
     $api->get('me', 'ApiUserController@me');
+    $api->get('settings', 'ApiSyncController@settings');
     $api->get('sales-to-pointing', 'ApiSyncController@getSalesToPointing');
     $api->put('save/sale/{sale}', 'ApiSyncController@save');
 });
