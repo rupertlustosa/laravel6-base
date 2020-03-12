@@ -44,5 +44,4 @@ Route::get('/t', function () {
 
     broadcast(new SaleEvent());
     dd('Event Run Successfully.');
-
 });

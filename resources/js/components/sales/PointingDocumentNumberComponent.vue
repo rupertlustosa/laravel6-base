@@ -174,10 +174,13 @@
                                 if (_.has(error, 'response.data.errors')) {
 
                                     this.errors = error.response.data.errors;
-                                } else {
+                                } else if (_.has(error, 'response.status')) {
 
                                     let message = '[' + error.response.status + '] ' + 'Erro no servidor';
                                     this.$awn.alert(message);
+                                } else {
+
+                                    // Sem internet?
                                 }
 
                                 console.log(error);

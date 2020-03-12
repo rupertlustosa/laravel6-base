@@ -24,6 +24,7 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
+        'place_id',
         'sale',
         'date',
         'value',
@@ -34,8 +35,8 @@ class Sale extends Model
         'name',
         'birth',
         'phone',
-        'item_identification',
-        'item_name',
+        //'item_identification',
+        //'item_name',
         'item_quantity',
         'item_unit_price',
     ];

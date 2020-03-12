@@ -28,23 +28,6 @@ class SaleService
         return $this->buildQuery()->paginate($limit);
     }
 
-    public function paginateSynced(int $limit): LengthAwarePaginator
-    {
-
-        return $this->buildQuery()
-            ->whereNotNull('synced_at')
-            ->paginate($limit);
-    }
-
-    public function paginateNotSynced(int $limit): LengthAwarePaginator
-    {
-
-        return $this->buildQuery()
-            ->whereNull('synced_at')
-            ->whereNotNull('document_number')
-            ->paginate($limit);
-    }
-
     private function buildQuery(): Builder
     {
 
@@ -71,6 +54,23 @@ class SaleService
         }
 
         return $query->orderByDesc('id');
+    }
+
+    public function paginateSynced(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()
+            ->whereNotNull('synced_at')
+            ->paginate($limit);
+    }
+
+    public function paginateNotSynced(int $limit): LengthAwarePaginator
+    {
+
+        return $this->buildQuery()
+            ->whereNull('synced_at')
+            ->whereNotNull('document_number')
+            ->paginate($limit);
     }
 
     public function all(): Collection
@@ -151,15 +151,11 @@ class SaleService
         $client = new Client([
             // Base URI is used with relative requests
             'base_uri' => $apiUrl->value,
-            //'base_uri' => 'https://betaprogramadefidelidade.smartercode.com.br',
             // You can set any number of default request options.
-            'timeout' => 5.0,
+            'timeout' => 2.0,
         ]);
-        //dd($apiUrl->value);
-        //$url = 'https://betaprogramadefidelidade.smartercode.com.br/api/sync/sale/pointing/' . $sale->sale;
-        //$url = 'https://betaprogramadefidelidade.smartercode.com.br/api/sync/sale/pointing/' . $sale->sale;
-        //$client = new Client();
-        $promise = $client->postAsync('/api/sync/sale/pointing/' . $sale->sale, $sale->toArray())
+
+        $promise = $client->postAsync('/api/sync/sale/pointing/' . $sale->sale, ['json' => $sale->toArray()])
             //$promise = $client->postAsync('/api/sync/sale/pointing/' . $sale->sale, $sale->toArray())
             ->then(
                 function (ResponseInterface $res) {

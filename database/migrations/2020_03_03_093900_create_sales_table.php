@@ -14,6 +14,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('place_id');
             $table->string('sale')->nullable();
             $table->dateTime('date');
             $table->float('value')->nullable();
@@ -24,8 +25,8 @@ class CreateSalesTable extends Migration
             $table->string('name')->nullable();
             $table->date('birth')->nullable();
             $table->string('phone')->nullable();
-            $table->string('item_identification')->nullable();
-            $table->string('item_name')->nullable();
+            //$table->string('item_identification')->nullable();
+            //$table->string('item_name')->nullable();
             $table->float('item_quantity')->nullable();
             $table->float('item_unit_price')->nullable();
             $table->dateTime('synced_at')->nullable()->index('sales_synced_at');

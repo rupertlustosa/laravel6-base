@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Services\SaleService;
+use App\Services\SettingService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class XpertImport extends Command
 {
@@ -40,6 +40,10 @@ class XpertImport extends Command
      */
     public function handle()
     {
+
+        $settings = (new SettingService())->settings();
+        $place = $settings->where('key', 'PLACE_ID')->first();
+        $place_id = $place->value;
 
         $products = [
 
@@ -121,7 +125,7 @@ class XpertImport extends Command
 
             $item = $products[rand(0, 3)];
 
-            $sale = Str::uuid();
+            $sale = rand(10, 99) . rand(10, 99) . rand(10, 99) . rand(10, 99);
             $fuel_pump = $fuel_pumps[rand(0, (count($fuel_pumps) - 1))];
             $nozzles = $fuel_pump['nozzles'];
             $fuel_pump_nozzle = $nozzles[rand(0, (count($nozzles) - 1))];
@@ -196,6 +200,7 @@ class XpertImport extends Command
                     $item_unit_price = $dataIndexed['PRECO'];
 
                     (new SaleService())->create([
+                        'place_id' => $place_id,
                         'sale' => $sale,
                         'date' => $date,
                         'value' => $value,

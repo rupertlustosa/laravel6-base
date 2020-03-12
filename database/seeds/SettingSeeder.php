@@ -21,12 +21,18 @@ class SettingSeeder extends Seeder
         $settings = array(
             array(
                 "id" => 1,
+                "description" => "ID do posto no Sistema WEB",
+                "key" => "PLACE_ID",
+                "value" => "1",
+            ),
+            array(
+                "id" => 2,
                 "description" => "Número de bicos",
                 "key" => "NOZZLE_NUMBER",
                 "value" => "15",
             ),
             array(
-                "id" => 2,
+                "id" => 3,
                 "description" => "URL do Projeto WEB",
                 "key" => "API_URL",
                 "value" => "https://betaprogramadefidelidade.smartercode.com.br",
