@@ -15,11 +15,11 @@ Route::post('login', 'Api\PassportController@login');
 Route::get('unauthenticated', 'Api\PassportController@unAuthenticated')->name('unAuthenticated');
 Route::post('register', 'Api\PassportController@register');
 
-Route::get('cities', 'Api\ApiPostalCodeController@findCity');
-Route::get('cities/find', 'Api\ApiCityController@find')->name('cities.find');
+#Route::get('cities', 'Api\ApiPostalCodeController@findCity');
+#Route::get('cities/find', 'Api\ApiCityController@find')->name('cities.find');
 
 Route::middleware('auth:api')->namespace('Api')->group(function ($api) {
 
-    $api->get('home', 'ApiHomeController@index');
-    $api->get('me', 'ApiUserController@me');
+    //$api->get('home', 'ApiHomeController@index');
+    //$api->get('me', 'ApiUserController@me');
 });

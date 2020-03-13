@@ -2,7 +2,7 @@
 /**
  * @package    Controller
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
- * @date       02/03/2020 19:01:44
+ * @date       09/12/2019 10:25:33
  */
 
 declare(strict_types=1);
@@ -10,11 +10,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Api\ApiBaseController;
+use App\Http\Requests\UserProfileRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Services\RoleService;
 use App\Services\UserService;
+use App\Traits\ImageCrop;
 use App\Traits\LogActivity;
 use Auth;
 use Exception;
@@ -25,16 +27,18 @@ use JsValidator;
 
 class UserController extends ApiBaseController
 {
-    use LogActivity;
+    use LogActivity, ImageCrop;
 
     private $service;
     private $label;
+    private $cropModule;
 
     public function __construct(UserService $service)
     {
 
         $this->service = $service;
         $this->label = 'Usuários';
+        $this->cropModule = "users";
     }
 
     public function index(RoleService $roleService): View
@@ -148,4 +152,43 @@ class UserController extends ApiBaseController
 
         return response()->json($user, 200, [], JSON_PRETTY_PRINT);
     }
+
+    public function find()
+    {
+        return $this->service->findList();
+    }
+
+    public function profile(): View
+    {
+        $this->log(__METHOD__);
+
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $this->authorize('profile', $user);
+
+        $validatorRequest = new UserProfileRequest();
+        $validator = JsValidator::make($validatorRequest->rules(), $validatorRequest->messages());
+
+        return view('panel.users.profile.form')
+            ->with([
+                'item' => $user,
+                'label' => $this->label,
+                'validator' => $validator,
+            ]);
+    }
+
+    public function profileUpdate(UserProfileRequest $request): RedirectResponse
+    {
+
+        $this->log(__METHOD__);
+        $user = Auth::user();
+
+        $this->service->profileUpdate($request->all(), $user);
+
+        return redirect()->route('users.profile')
+            ->with([
+                'message' => 'Atualizado com sucesso',
+                'messageType' => 's',
+            ]);
+    }
+
 }

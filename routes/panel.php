@@ -5,16 +5,6 @@ Route::namespace('Panel')
     ->prefix('panel')
     ->group(function ($panel) {
 
-        $panel->get('/images/{folder}/Original/{width}/{filename}', function ($folder, $width, $filename) {
-
-            $path = 'public/images/' . $folder . '/Original/' . $filename;
-            $file = Storage::get($path);
-
-            return Image::make($file)->resize($width, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->response();
-        })->where('width', '[0-9]+');
-
         $panel->get('/', 'DashboardController@dashboard')->name("dashboard");
         $panel->get('/iframe', 'DashboardController@iframe')->name("iframe");
 

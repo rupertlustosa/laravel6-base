@@ -59,10 +59,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/panel.php'));
 
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/images.php'));
-
         if (config('app.name') === 'RLustosa') {
             Route::middleware('web')
                 ->namespace($this->namespace)

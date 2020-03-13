@@ -14,28 +14,9 @@
             <i class="fa fa-reorder"></i>
         </button>
 
-        <!--</div>-->
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav mr-auto">
-
-                <li class="{{ isActiveRoute('dashboard') }}">
-                    <a aria-expanded="false" role="button" href="{{ route('dashboard') }}">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-label">Início</span>
-                    </a>
-                </li>
-                <li class="{{ isActiveRoute('roles.*') }}">
-                    <a aria-expanded="false" role="button" href="{{ route('roles.index') }}">
-                        <i class="fa fa-image"></i>
-                        <span class="nav-label">Perfis</span>
-                    </a>
-                </li>
-                <li class="{{ isActiveRoute('users.*') }}">
-                    <a aria-expanded="false" role="button" href="{{ route('users.index') }}">
-                        <i class="fa fa-users"></i>
-                        <span class="nav-label">Usuários</span>
-                    </a>
-                </li>
+                @include('panel._layouts.menu-list')
             </ul>
 
             <form name="frm_new_users_notifications" id="frm_new_users_notifications">

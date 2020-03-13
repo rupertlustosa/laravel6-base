@@ -31,18 +31,18 @@
                         {{ csrf_field() }}
 
                         <!-- inicio dos campos -->
-                        
+
                             <div class="form-row">
                                 <div class="form-group col-md-6 @if ($errors->has('name')) has-error @endif">
                                     <label for="name">Nome</label>
                                     <input type="text" name="name" id="name" class="form-control"
-                                    		value="{{ old('name', (isset($item) ? $item->name : '')) }}">
+                                           value="{{ old('name', (isset($item) ? $item->name : '')) }}">
                                     {!! $errors->first('name','<span class="help-block m-b-none">:message</span>') !!}
                                 </div>
 
                             </div>
-                            
-                        <!-- fim dos campos -->
+
+                            <!-- fim dos campos -->
 
                             <input id="routeTo" name="routeTo" type="hidden" value="{{ old('routeTo', 'index') }}">
                             <button class="btn btn-primary" id="bt_salvar" type="submit"
@@ -53,7 +53,8 @@
 
                             @if(!isset($item))
                                 <button class="btn btn-default" id="bt_salvar_adicionar" type="submit"
-                                        data-toggle="tooltip" data-placement="bottom" title="Salva e continua na tela de cadastro">
+                                        data-toggle="tooltip" data-placement="bottom"
+                                        title="Salva e continua na tela de cadastro">
                                     <i class="fa fa-save"></i>
                                     Salvar e adicionar novo
                                 </button>

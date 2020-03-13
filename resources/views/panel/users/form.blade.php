@@ -54,10 +54,10 @@
                                     @endif
                                 </div>
                             </div>
-
                             <br>
-                            <fieldset class="scheduler-border mt-2">
-                                <legend align="left">Dados de Acesso:</legend>
+                            <br>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border">Dados de Acesso</legend>
                                 <div class="form-row">
                                     <div class="form-group col-md-12 @if ($errors->has('email')) has-error @endif">
                                         <label for="email">E-mail *</label>

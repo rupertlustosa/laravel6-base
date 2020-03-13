@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->to('/login');
-});
+Route::redirect('/', '/panel');
 
 Auth::routes();
 
@@ -34,4 +32,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('login/{provider}', 'Auth\LoginSocialController@redirect');
 
 #Route::get('login/{provider}/callback','SocialController@Callback');
-Route::get('login/{provider}/callback','Auth\LoginSocialController@callback');
+Route::get('login/{provider}/callback', 'Auth\LoginSocialController@callback');
+
+Route::get('/images/{folder}/Original/{width}/{filename}', 'ImageController@original')->name("image.original");
