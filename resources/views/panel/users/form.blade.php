@@ -91,7 +91,7 @@
                                 @endphp
                                 <div class="form-row">
                                     <div class="form-group col-md-12 @if ($errors->has('roles')) has-error @endif">
-                                        <label for="columnist_id">Quais os perfis desse usuário?</label>
+                                        <label for="roles">Quais os perfis desse usuário?</label>
                                         <select class="form-control select2" multiple name="roles[]" id="roles">
                                             <option value="">Selecione abaixo</option>
                                             @foreach($roleOptions as $i => $v)
@@ -154,7 +154,8 @@
 
 
 @section('styles')
-    <style>
+    <style>/
+        panel-layout-side.blade.php
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
             padding: 0 1.4em 1.4em 1.4em !important;

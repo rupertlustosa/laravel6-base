@@ -6,9 +6,9 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('_titulo_pagina_') </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{!! mix('css/app.css') !!}"/>
-    <link rel="stylesheet" href="{!! mix('css/theme.css') !!}"/>
+    {{--<link rel="stylesheet" href="{!! mix('css/theme.css') !!}"/>
     <link rel="stylesheet" href="{!! mix('css/select2.css') !!}"/>
-    <link rel="stylesheet" href="{!! mix('css/datepicker.css') !!}"/>
+    <link rel="stylesheet" href="{!! mix('css/datepicker.css') !!}"/>--}}
 
     @yield('styles')
     <style>

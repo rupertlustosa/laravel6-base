@@ -36,7 +36,7 @@ class RoleService
 
         $query->when(request('search'), function ($query, $search) {
 
-            return $query->where('id', 'LIKE', '%' . $search . '%');
+            return $query->where('name', 'LIKE', '%' . $search . '%');
         });
 
         return $query->orderByDesc('id');
@@ -63,8 +63,6 @@ class RoleService
 
             $model = new Role();
             $model->fill($data);
-            #$model->user_creator_id = \Auth::id();
-            #$model->user_updater_id = \Auth::id();
             $model->save();
 
             return $model;
@@ -75,7 +73,6 @@ class RoleService
     {
 
         $model->fill($data);
-        #$model->user_updater_id = \Auth::id();
         $model->save();
 
         return $model;
@@ -83,9 +80,6 @@ class RoleService
 
     public function delete(Role $model): ?bool
     {
-        #$model->user_eraser_id = \Auth::id();
-        #$model->timestamps = false;
-        #$model->save();
 
         return $model->delete();
     }
