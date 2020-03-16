@@ -7,7 +7,18 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Instalar o passaport
+## Configurar o Layout
 
-- php artisan passport:keys
-- php artisan passport:install
+**Menu no topo ou na lateral?**
+
+O arquivo abaixo faz a chamada para o Template com barra no topo ou na lateral:
+``` bash
+resources/views/panel/_layouts/panel.blade.php
+```
+
+**Botões de cadastro e listagem na NavBar**
+
+Edite a variável showButtonsInModuleNavBar no arquivo abaixo:
+``` bash
+config/app.php
+```

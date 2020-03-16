@@ -6,9 +6,6 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('_titulo_pagina_') </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{!! mix('css/app.css') !!}"/>
-    {{--<link rel="stylesheet" href="{!! mix('css/theme.css') !!}"/>
-    <link rel="stylesheet" href="{!! mix('css/select2.css') !!}"/>
-    <link rel="stylesheet" href="{!! mix('css/datepicker.css') !!}"/>--}}
 
     @yield('styles')
     <style>
@@ -48,7 +45,7 @@
         }
     </style>
 </head>
-<body class="skin-1_">
+<body>
 <div id="app">
     <!-- Wrapper-->
     <div id="wrapper">
@@ -78,24 +75,10 @@
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>
-{{--<script src="{{ mix('/js/custom-masks.js') }}"></script>--}}
-{{--<script src="{{ mix('/js/moment.js') }}"></script>--}}
-{{--<script src="{{ mix('/js/blockUI.js') }}"></script>--}}
-{{--<script src="{{ mix('/js/functions.js') }}"></script>--}}
-
-{{--<script src="{{ mix('/js/custom-select2.js') }}"></script>
-<script src="{{ mix('/js/custom-datepicker.js') }}"></script>
-<script src="{{ mix('/js/custom-datetimepicker.js') }}"></script>--}}
-
 
 @section('scripts')
 @show
 <script>
-    $(function () {
-        //$('[data-toggle="tooltip"]').tooltip();
-        //$('[data-tooltip=tooltip"]').tooltip();
-    });
-
     @if (Session::has('message'))
     showMessage('{{ session('messageType') }}', '{{ session('message') }}');
     @endif
