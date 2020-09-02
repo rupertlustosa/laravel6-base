@@ -18,7 +18,9 @@ mix.js([
     'resources/js/boot-jquery.mask.js',
     'node_modules/select2/dist/js/select2.full.js',
     'resources/js/boot-select2.js',
-    'resources/js/boot-functions.js',
+    'resources/inspinia/jquery.maskMoney.min.js',
+    'resources/inspinia/jquery.slimscroll.min.js',
+    'resources/inspinia/jquery.metisMenu.js',
 ], 'public/js/app.js')
     .extract(['jquery', 'bootstrap', 'toastr', 'jquery-blockui', 'select2', 'jquery-mask-plugin'])
     .sourceMaps()
@@ -39,20 +41,7 @@ mix.styles([
 
 mix.copy('resources/inspinia/font-awesome/fonts', 'public/fonts');
 
-
-/*'node_modules/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
-    'node_modules/moment/min/moment.min.js',
-    'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-    'node_modules/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt-BR.js',
-    'resources/js/boot-datepicker.js',*/
-/*
-
-mix.styles([
-    'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
-], 'public/css/datepicker.css');
-
-// datetimepicker
-mix.styles([
-        'node_modules/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build.scss',
-    ], 'public/css/custom-datetimepicker.css');
-*/
+mix.scripts([
+    'resources/js/boot-functions.js',
+], 'public/js/functions.js')
+    .sourceMaps();
