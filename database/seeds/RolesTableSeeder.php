@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Modules\Authentication\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class RolesTableSeeder extends Seeder
             ),
             array(
                 "id" => 2,
-                "name" => "Atendente",
+                "name" => "Usuário",
             ),
         );
 
