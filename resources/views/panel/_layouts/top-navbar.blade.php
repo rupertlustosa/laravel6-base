@@ -10,7 +10,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="{{ url('logout') }}">
+                <a href="javascript:;" onclick="document.getElementById('logout-form').submit();">
                     <i class="fa fa-sign-out"></i> Sair
                 </a>
             </li>
