@@ -6,63 +6,52 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('_titulo_pagina_') </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{!! mix('css/app.css') !!}"/>
-
     @yield('styles')
+
     <style>
-        /*.ms-choice {
-            width: 99% !important;
+
+        fieldset.scheduler-border {
+            border: 1px solid #333333 !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0 0 0 0 #000;
+            box-shadow: 0 0 0 0 #000;
         }
 
-        .ms-choice > span {
-            top: 6px !important;
-            left: 15px !important;
+        fieldset.scheduler-border-color-2 {
+            border: 1px solid #41cbd8 !important;
         }
 
-        .form-group label {
+        legend.scheduler-border {
+            width: inherit; /* Or auto */
+            padding: 0 10px; /* To give a bit of padding on the left and right */
+            border-bottom: none;
+            color: #333333 !important;
+        }
+
+        legend.scheduler-border h4 {
+            color: #333333 !important;
+        }
+
+        legend {
+            font-size: 13px !important;
             font-weight: 600;
-        }*/
-
-        .form-control, .single-line {
-            border: 1px solid rgb(223, 225, 229);
-        }
-
-        .select2-container--bootstrap4 .select2-dropdown {
-            z-index: 9999;
-        }
-
-        .navbar ul .dropdown-menu {
-            min-width: 13rem !important;
-        }
-
-        .select2-selection {
-            padding: 0;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .top-navigation .wrapper.wrapper-content {
-                padding: 10px 0;
-            }
         }
     </style>
 </head>
-<body>
+<body class="light-skin_ fixed-nav fixed-nav-basic fixed-sidebar">
 <div id="app">
     <!-- Wrapper-->
     <div id="wrapper">
-        @if(!request()->has('iframe'))
-            @include('panel._layouts.main-navigation-side')
-        @endif
 
-        <div id="page-wrapper" class="gray-bg">
-        @include('panel._layouts.top-navbar')
-        <!-- Main view  -->
-            <div id="topo-tela"></div>
-        @yield('content')
+        @include('panel._layouts.main-navigation-side')
 
-        @if(!request()->has('iframe'))
-            <!-- Footer -->
-                @include('panel._layouts.footer')
-            @endif
+        <div id="page-wrapper" class="white-bg">
+            @include('panel._layouts.top-navbar')
+
+            @yield('content')
+
+            @include('panel._layouts.footer')
         </div>
         <!-- End page wrapper-->
     </div>
@@ -75,10 +64,12 @@
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{ mix('/js/functions.js') }}"></script>
 
 @section('scripts')
 @show
 <script>
+
     @if (Session::has('message'))
     showMessage('{{ session('messageType') }}', '{{ session('message') }}');
     @endif

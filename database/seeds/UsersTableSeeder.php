@@ -13,32 +13,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = array(
-            array(
-                "name" => "Italo Veloso",
-                "email" => "italoplus@gmail.com",
-            ),
-            array(
+        $users = [
+            [
                 "name" => "Rupert Lustosa",
                 "email" => "rupertlustosa@gmail.com",
-            ),
-            array(
-                "name" => "Marcelo Alves",
-                "email" => "marceloalvessoft@gmail.com",
-            ),
-            array(
-                "name" => "Marcos Marion",
-                "email" => "marcosmariondev@gmail.com",
-            ),
-            array(
-                "name" => "Daniel Messias",
-                "email" => "danielmessi13@hotmail.com",
-            ),
-            array(
-                "name" => "Desenvolvedor",
-                "email" => "desenvolvedor@gmail.com",
-            ),
-        );
+            ]
+        ];
 
         $password = Hash::make('12345678');
 
