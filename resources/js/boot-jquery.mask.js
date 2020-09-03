@@ -17,7 +17,7 @@ try {
 
         $('.mask_phone_with_ddd').mask(maskBehavior, options);
         $('.mask_ip_address').mask('099.099.099.099', {clearIfNotMatch: true});
-        $('.mask_percent').mask('##0,00%', {reverse: true});
+        $('.mask_percent').mask('##0,00', {reverse: true});
         $('.mask_cep').mask('00000-000', {clearIfNotMatch: true});
         $('.mask_cep_api').mask('00000-000', {
             clearIfNotMatch: true, placeholder: "__/__/____", onComplete: function (cep) {

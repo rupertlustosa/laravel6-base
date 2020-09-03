@@ -7,6 +7,8 @@
 require('./bootstrap');
 
 import TDate from './boot-vue-functions'
+import VueLoading from 'vuejs-loading-plugin'
+import VueAWN from "vue-awesome-notifications"
 
 window.Vue = require('vue');
 
@@ -19,8 +21,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('link-destroy-component', require('./components/LinkDestroyComponent').default);
-
-//Vue.component('select2-vue-component', require('./components/Select2VueComponent').default);
+Vue.component('form-error-component', require('./components/FormErrorComponent').default);
+Vue.component('float-mask-component', require('./components/FloatMaskComponent').default);
+Vue.component('select-city-component', require('./components/SelectCityComponent').default);
 
 Vue.component(
     'passport-clients',
@@ -42,6 +45,35 @@ Vue.component(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// overwrite defaults
+Vue.use(VueLoading, {
+    dark: true, // default false
+    text: 'Processando...', // default 'Loading'
+    loading: false, // default false
+    //customLoader: myVueComponent, // replaces the spinner and text with your own
+    //background: 'rgb(47, 64, 80)', // set custom background
+    classes: ['loading-screen-inspinia', 'animated', 'fadeIn'] // array, object or string
+});
+
+let optionsVueAWN = {
+    position: "top-right",
+    clean: true,
+    labels: {
+        tip: '',
+        info: '',
+        success: '',
+        warning: '',
+        alert: '',
+        async: 'Loading',
+        confirm: 'Confirmation required',
+    },
+    icons: {
+        enabled: false,
+    }
+    //durations: {success: 0}
+};
+
+Vue.use(VueAWN, optionsVueAWN);
 
 const app = new Vue({
     el: '#app',
