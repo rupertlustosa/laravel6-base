@@ -1018,6 +1018,7 @@ $schemas = [
         $stubUpdate = str_replace('{{class}}', session('classe'), $stubUpdate);
         $stubUpdate = str_replace('{{classVar}}', lcfirst(session('classe')), $stubUpdate);
         $stubUpdate = str_replace('{{table}}', session('tabela'), $stubUpdate);
+        $stubUpdate = str_replace('{{table_singular}}', Str::singular(session('tabela')), $stubUpdate);
         $stubUpdate = str_replace('{{date}}', date('d/m/Y'), $stubUpdate);
         $stubUpdate = str_replace('{{time}}', date('H:i:s'), $stubUpdate);
 

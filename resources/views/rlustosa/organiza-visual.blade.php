@@ -1,7 +1,7 @@
 <?php
 $width = 300;
 ?>
-        <!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
     <title>Rlustosa - Início.</title>
@@ -87,7 +87,7 @@ $width = 300;
                 minWidth: <?php echo $width?>-10,
                 grid: [<?php echo $width / 3?>, 10],
                 stop: function (event, ui) {
-                    largura = $(this).width() / 100;
+                    largura = ($(this).width() / 100).toFixed();
                     id = "#" + $(this).attr('id');
                     $(id + " :input").val(largura);
                     $(id).height(48);
@@ -97,31 +97,32 @@ $width = 300;
             });
 
             $('.minus').on('click', function () {
-                idli = $(this).attr('idli');
+
+                let idli = $(this).attr('idli');
                 $('#' + idli).remove();
             });
+
             $('.plus').on('click', function () {
-                randomString = randomString(10);
+
+                let randomString = Math.random().toString(36).substr(2, 5);
+                console.log(randomString)
+
                 $("#sortable").append('<li class="ui-state-default no-resizable ui-widget-content"' +
-                        'id="li_' + randomString + '">' +
-                        '<a href="javascript:;" class="minus" idli="li_' + randomString + '">' +
-                        '<span class="glyphicon glyphicon-minus"></span>' +
-                        '</a>' +
-                        '<input type="hidden" class="form-control campo"' +
-                        'name="campo[divisor__' + randomString + ']"' +
-                        'value="12">' +
-                        '</li>');
+                    'id="li_' + randomString + '">' +
+                    '<a href="javascript:;" onclick="removeLi(\'li_' + randomString + '\')">' +
+                    '<span class="glyphicon glyphicon-minus"></span>' +
+                    '</a>' +
+                    '<input type="hidden" class="form-control campo"' +
+                    'name="campo[divisor__' + randomString + ']"' +
+                    'value="12">' +
+                    ''+randomString +''+
+                    '</li>');
             });
-
-
-            function randomString(length) {
-                chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                var result = '';
-                for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-                return result;
-            }
-
         });
+
+        function removeLi(idli){
+            $('#' + idli).remove();
+        }
     </script>
 </head>
 <body>
@@ -142,6 +143,9 @@ $width = 300;
 
                 <label for="txtComment">Posicione os campos abaixo:</label><br>
                 <div style="width: 1225px; min-height: 500px; float: left; background-color: #fafafa">
+                    <a href="javascript:;" class="plus">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
                     <ul id="sortable">
                         @foreach($campos_disponiveis as $campo)
                             <li class="ui-state-default resizable ui-widget-content"
@@ -174,11 +178,6 @@ $width = 300;
                             </li>
                         @endfor
 
-
-                        <a href="javascript:;" class="plus">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-
                     </ul>
                 </div>
 
@@ -193,7 +192,7 @@ $width = 300;
 
                 @foreach($arquivos as $arquivo)
                     @php
-                    $arquivo = json_decode($arquivo);
+                        $arquivo = json_decode($arquivo);
                     @endphp
                     <div class="form-group @if($arquivo->existe == true) alert alert-danger @endif">
                         <label class="col-sm-3 control-label">

@@ -22,7 +22,7 @@ class {{class}}UpdateRequest extends FormRequest
     public function authorize()
     {
 
-        return $this->user()->can('update', $this->{{classVar}});
+        return $this->user()->can('update', $this->{{table_singular}});
     }
 
     /**
