@@ -2,6 +2,7 @@
 
 use App\Rlustosa\GenericImageUpload;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,9 +29,24 @@ if (!function_exists('isActiveRoute')) {
 
 if (!function_exists('getCurrency')) {
 
-    function getCurrency($value)
+    function getCurrency($value, $precision = 2)
     {
-        return number_format($value, 2, ',', '.');
+        return number_format($value, $precision, ',', '.');
+    }
+}
+
+if (!function_exists('isValidSearchField')) {
+
+    function isValidSearchField($field, $order, Model $model)
+    {
+        $fields = $model->getConnection()
+            ->getSchemaBuilder()
+            ->getColumnListing($model->getTable());
+
+        $validOrder = $order == 'ASC' || $order == 'DESC';
+        $validField = in_array($field, $fields);
+
+        return $validOrder && $validField;
     }
 }
 
@@ -135,25 +151,26 @@ if (!function_exists('uploadBase64')) {
 
     function uploadBase64($dataEncoded, $folder, $filename = null)
     {
-
-        $encodedFile = explode(",", $dataEncoded)[1];
+        $partials = explode(",", $dataEncoded);
+        $encodedFile = $partials[1];
         $decodedFile = base64_decode($encodedFile);
 
         $fileName = 'files/' . $folder . '/' . Carbon::now('America/Fortaleza')->format('YmdHis') . '_' .
             Str::random(4) . '_' .
             rand(10, 99) . rand(10, 99) . rand(10, 99) . '_' .
-            Str::random(4) . '.' .
+            Str::random(4) .
             $filename;
 
-        $filePath = storage_path() . '/' . $fileName;
-        File::put($filePath, $decodedFile);
 
+        $filePath = storage_path() . '/' . $fileName;
+
+        File::put($filePath, $decodedFile);
         $ext = pathinfo($filePath, PATHINFO_EXTENSION);
         $filesize = filesize($filePath);
 
         return [
             'file' => $fileName,
-            'filename' => $file['upload']['filename'],
+            'filename' => $fileName['filename'],
             'extension' => $ext,
             'size' => $filesize,
         ];
@@ -222,6 +239,86 @@ if (!function_exists("uploadWithCrop")) {
     }
 }
 
+if (!function_exists("uploadGalleryWithCrop")) {
+
+    function uploadGalleryWithCrop($fieldName, $module, $parentId): ?array
+    {
+        $files = request()->file($fieldName);
+        if (count($files)) {
+            $images = array();
+            foreach ($files as $file) {
+
+                $images[] = GenericImageUpload::storeGallery($file, $module, $parentId);
+            }
+            return $images;
+        } else {
+
+            return null;
+        }
+    }
+}
+
+if (!function_exists("uploadWithoutCrop")) {
+
+    function uploadWithoutCrop($fieldName, $module): ?string
+    {
+
+        if (request()->file($fieldName)) {
+
+            return GenericImageUpload::store(request()->file($fieldName), $module, true);
+        } else {
+
+            return null;
+        }
+    }
+}
+
+if (!function_exists("booleanInTd")) {
+
+    function booleanInTd($value): ?string
+    {
+
+        $label = ((boolean)$value) ? 'Sim' : 'Não';
+        return '<span class="label label-' . ($value ? 'primary' : 'label-warning') . '">' . $label . '</span>';
+    }
+}
+
+if (!function_exists("onlyNumbers")) {
+
+    function onlyNumbers($string): ?string
+    {
+
+        return preg_replace('/[^0-9]/', '', $string);
+    }
+}
+
+if (!function_exists("linkToImageInTd")) {
+
+    function linkToImageInTd($id, $image, $folder, $showCrop = true): string
+    {
+
+        if (!empty($image)) {
+            $link = '
+            <a href="' . asset($image) . '" target="_blank">
+                <img src="' . asset($image) . '" width="80">
+            </a>
+            <br/>';
+            if ($showCrop) {
+
+                $link .= '<a href="' . route($folder . '.imageCrop', [$id]) . '">
+                <i class="fa fa-crop"></i>
+                Recortar
+            </a>';
+            }
+
+            return $link;
+        } else {
+
+            return '';
+        }
+    }
+}
+
 if (!function_exists('route_is')) {
     /**
      * Check if route(s) is the current route.
@@ -248,13 +345,14 @@ if (!function_exists('uploadUserImage')) {
     {
 
         $decodedFile = base64_decode($image);
+
         $ext = explode(".", $name);
 
         if (count($ext) == 2) {
 
             $ext = $ext[1];
         } else {
-            $ext = '.png';
+            $ext = 'png';
         }
 
         $folder = 'users';
@@ -288,15 +386,5 @@ if (!function_exists('uploadUserImage')) {
             'size' => $filesize,
         ];
 
-    }
-}
-
-if (!function_exists("booleanInTd")) {
-
-    function booleanInTd($value): ?string
-    {
-
-        $label = ((boolean)$value) ? 'Sim' : 'Não';
-        return '<span class="label label-' . ($value ? 'primary' : 'label-warning') . '">' . $label . '</span>';
     }
 }

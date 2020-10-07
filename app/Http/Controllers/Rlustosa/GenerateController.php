@@ -308,6 +308,7 @@ $schemas = [
 
             $camposDaTabela[] = array('campo' => Str::camel($registro->Field), 'campo_original' => trim($registro->Field),
                 'tipo' => $tipo,
+                'tipo_2' => explode(' ', $tipo)[0],
                 'key' => ($registro->Key === 'PRI' ? 'primaria' : ($registro->Key === 'MUL' ? 'estrangeira' : null)),
                 'aceita_nulo' => ($registro->Null === 'NO' ? 'N' : ($registro->Null === 'YES' ? 'S' : null)),
                 'entreParentesis' => $this->conteudoEntreParentesis($registro->Type)
@@ -395,7 +396,7 @@ $schemas = [
             if ($dados->tipo === 'Http/Controllers/Panel') {
 
                 $this->gerarController($dados->destino);
-            } elseif ($dados->tipo === 'Http/Controllers/Api/V1') {
+            } elseif ($dados->tipo === 'Http/Controllers/Api') {
 
                 $this->gerarControllerApi($dados->destino);
             } elseif ($dados->tipo === 'Observers') {
@@ -454,7 +455,37 @@ $schemas = [
         $labels = session('label');
         $label = $labels[$campo]['nome'];
 
-        if ($campo === 'active' || $campo === 'status') {
+        $camposDaTabela = $this->describe(session('tabela'));
+
+        $mapaDeCampos = [];
+        foreach ($camposDaTabela as $field) {
+
+            $mapaDeCampos[$field['campo_original']] = [
+                'tipo' => $field['tipo'],
+                'tipo_2' => $field['tipo_2'],
+                'key' => $field['key'],
+            ];
+        }
+
+        //dd($campo, $mapaDeCampos);
+
+        if ($mapaDeCampos[$campo]['key'] == 'estrangeira') {
+
+            return '
+                                <div class="form-group col-md-' . $largura . ' @if ($errors->has(\'' . $campo . '\')) has-error @endif">
+                                    <label for="' . $campo . '">' . $label . '</label>
+                                    <select name="' . $campo . '" id="' . $campo . '" class="form-control">
+                                        <option value="">Selecione um registro</option>
+                                        @foreach(\App\Models\User::select(\'id\', \'name\')->orderBy(\'name\')->get() as $option)
+                                            <option
+                                                value="{{ $option->id }}" {{ old(\'' . $campo . '\', (isset($item) ? $item->' . $campo . ' : \'\')) == $option->id ? \'selected\' : null }}>
+                                                {{ $option->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    {!! $errors->first(\'' . $campo . '\',\'<span class="help-block m-b-none">:message</span>\') !!}
+                                </div>';
+        } elseif ($campo === 'active' || $campo === 'status') {
 
             return '
                                 <div class="form-group col-md-' . $largura . ' @if ($errors->has(\'' . $campo . '\')) has-error @endif">
@@ -495,14 +526,25 @@ $schemas = [
             return '
                                 <div class="form-group col-md-' . $largura . ' @if ($errors->has(\'' . $campo . '\')) has-error @endif">
                                     <label for="' . $campo . '">' . $label . '</label>
-                                    <div class="input-group date_calendar">
+                                    <!--div class="input-group date_calendar">
                                         <div class="input-group date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             <input type="text" class="form-control mask_date" name="' . $campo . '"
                                                    id="' . $campo . '"
                                                    value="{{ old(\'' . $campo . '\', (isset($item) ? $item->' . $campo . ' : \'\')) }}">
                                         </div>
-                                    </div>
+                                    </div-->
+                                    <input type="date" name="' . $campo . '" id="' . $campo . '" class="form-control"
+                                               value="{{ old(\'' . $campo . '\', ((isset($item) && $item->' . $campo . ') ? $item->' . $campo . '->format(\'Y-m-d\') : \'\')) }}">
+                                    {!! $errors->first(\'' . $campo . '\',\'<span class="help-block m-b-none">:message</span>\') !!}
+                                </div>
+';
+        } else if (in_array($mapaDeCampos[$campo]['tipo_2'], $this->fieldsNumber)) {
+            return '
+                                <div class="form-group col-md-' . $largura . ' @if ($errors->has(\'' . $campo . '\')) has-error @endif">
+                                    <label for="' . $campo . '">' . $label . '</label>
+                                    <input type="number" name="' . $campo . '" id="' . $campo . '" class="form-control"
+                                    		value="{{ old(\'' . $campo . '\', (isset($item) ? $item->' . $campo . ' : \'\')) }}">
                                     {!! $errors->first(\'' . $campo . '\',\'<span class="help-block m-b-none">:message</span>\') !!}
                                 </div>
 ';
@@ -582,6 +624,7 @@ $schemas = [
 
             return false;
         }*/
+
         $this->criaApi(session('tabela'));
     }
 
@@ -609,7 +652,7 @@ $schemas = [
         $stub = str_replace('{{date}}', date('d/m/Y'), $stub);
         $stub = str_replace('{{time}}', date('H:i:s'), $stub);
 
-        $dest = app_path() . '/Http/Controllers/Api/Api' . $model . 'Controller.php';
+        $dest = app_path() . '/Http/Controllers/Api/' . $model . 'Controller.php';
         //dd($dest, $stub);
 
         if (!file_exists($dest)) {
@@ -755,11 +798,11 @@ $schemas = [
 
                 if (in_array($campo['tipo'], ['datetime', 'date', 'timestamp'])) {
 
-                    $dates[] = $campo['campo_original'];
-                } else {
+                    $dates[] = "        '" . $campo['campo_original'] . "',";
+                    //} else {
 
-                    $fillable[] = "        '" . $campo['campo_original'] . "',";
                 }
+                $fillable[] = "        '" . $campo['campo_original'] . "',";
             }
         }
 
@@ -772,11 +815,13 @@ $schemas = [
         }
 
         $fillable = implode("\r\n", $fillable);
+        $dates = implode("\r\n", $dates);
 
         $stub = str_replace('{{class}}', session('classe'), $stub);
         $stub = str_replace('{{classVar}}', lcfirst(session('classe')), $stub);
         $stub = str_replace('{{table}}', session('tabela'), $stub);
         $stub = str_replace('{{fillable}}', $fillable, $stub);
+        $stub = str_replace('{{dates}}', $dates, $stub);
         $stub = str_replace('{{useIlluminateSoftDeletes}}', "\r\n" . $useIlluminateSoftDeletes, $stub);
         $stub = str_replace('{{useSoftDeletes}}', "\r\n" . $useSoftDeletes, $stub);
         $stub = str_replace('{{date}}', date('d/m/Y'), $stub);
@@ -881,7 +926,17 @@ $schemas = [
         $regras = $rules = [];
         foreach ($camposDaTabela as $campo) {
 
-            if ($campo['campo_original'] === 'created_at' or $campo['campo_original'] === 'updated_at' or $campo['campo_original'] === 'deleted_at') {
+            $ignoreFields = [
+                'id',
+                'created_at',
+                'updated_at',
+                'deleted_at',
+                'user_creator_id',
+                'user_updater_id',
+                'user_eraser_id',
+            ];
+
+            if (in_array($campo['campo_original'], $ignoreFields)) {
 
                 continue;
             }
@@ -957,19 +1012,23 @@ $schemas = [
 
                 if ($campo['aceita_nulo'] === 'N') {
 
-                    $regras[] = "'" . $campo['campo_original'] . "' => 'required|date_format:d/m/Y',";
+                    $regras[] = "'" . $campo['campo_original'] . "' => 'required|date',";
+                    //$regras[] = "'" . $campo['campo_original'] . "' => 'required|date_format:d/m/Y',";
                 } elseif ($campo['aceita_nulo'] === 'S') {
 
-                    $regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date_format:d/m/Y',";
+                    $regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date',";
+                    //$regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date_format:d/m/Y',";
                 }
             } elseif ($campo['tipo'] === 'datetime' or $campo['tipo'] === 'timestamp') {
 
                 if ($campo['aceita_nulo'] === 'N') {
 
-                    $regras[] = "'" . $campo['campo_original'] . "' => 'required|date_format:d/m/Y H:i',";
+                    $regras[] = "'" . $campo['campo_original'] . "' => 'required|date',";
+                    //$regras[] = "'" . $campo['campo_original'] . "' => 'required|date_format:d/m/Y H:i',";
                 } elseif ($campo['aceita_nulo'] === 'S') {
 
-                    $regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date_format:d/m/Y H:i',";
+                    $regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date',";
+                    //$regras[] = "'" . $campo['campo_original'] . "' => 'nullable|date_format:d/m/Y H:i',";
                 }
             } elseif ($campo['tipo'] === 'enum') {
 
@@ -1169,16 +1228,7 @@ class {{class}}Seeder extends Seeder
                     $thead = '                                        <th>' . $label['nome'] . '</th>';
                     $tbody = '
                                                 <td class="text-center">
-                                                    @if($item->' . $nome_banco . ')
-                                                        <a href="{{ asset(\'images/\'.$item->image) }}" target="_blank">
-                                                            <img src="{{ asset(\'images/100/\'.$item->' . $nome_banco . ') }}">
-                                                        </a>
-                                                        <br/>
-                                                        <a href="{{ route(\'' . session('tabela') . '.imageCrop\', [$item->id]) }}">
-                                                            <i class="fa fa-crop"></i>
-                                                            Recortar
-                                                        </a>
-                                                    @endif
+                                                    {!! linkToImageInTd($item->id, $item->' . $nome_banco . ', \'' . session('tabela') . '\', false) !!}
                                                 </td>
             ';
                 } elseif ($nome_banco === 'created_at' or $nome_banco === 'updated_at' or $nome_banco === 'id') {

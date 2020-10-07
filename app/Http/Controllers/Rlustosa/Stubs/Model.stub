@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Controller
+ * @package    Models
  * @author     Rupert Brasil Lustosa <rupertlustosa@gmail.com>
  * @date       {{date}} {{time}}
  */
@@ -16,16 +16,13 @@ class {{class}} extends Model
 {{{useSoftDeletes}}
     use CreationDataTrait;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
 {{fillable}}
     ];
 
-    # Accessors & Mutators
+    public $dates = [
+{{dates}}
+    ];
 
     # Relationships
 

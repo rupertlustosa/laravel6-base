@@ -30,7 +30,6 @@ class Api{{class}}Controller extends ApiBaseController
     public function __construct({{class}}Service $service)
     {
 
-        $this->middleware('jwt.auth');
         $this->service = $service;
     }
 
