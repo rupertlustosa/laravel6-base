@@ -110,7 +110,7 @@ if (!function_exists('userAvatarCrop')) {
 
 if (!function_exists('formatDocumentNumber')) {
 
-    function formatDocumentNumber($value): ?String
+    function formatDocumentNumber($value): ?string
     {
 
         $value = preg_replace('/[^0-9]/', '', $value);
@@ -165,9 +165,9 @@ if (!function_exists('upload')) {
     {
 
         $nome_arquivo = Carbon::now('America/Fortaleza')->format('YmdHis') . '_' .
-            Str::random(8) . '_' .
-            rand(1000, 9999) . rand(1000, 9999) . rand(1000, 9999) . '_' .
-            Str::random(8) . '.' .
+            Str::random(4) . '_' .
+            rand(100, 999) . rand(100, 999) . rand(100, 999) . '_' .
+            Str::random(4) . '.' .
             $file->guessClientExtension();
 
         $path = $file->storeAs(
@@ -196,11 +196,11 @@ if (!function_exists("formatsUserCreationData")) {
     function formatsUserCreationData($creationData)
     {
         return '
-                                                    <i class="fa fa-list-ul" data-toggle="tooltip" data-placement="bottom" title="'.implode('<br>', $creationData).'"></i>
+                                                    <i class="fa fa-list-ul" data-toggle="tooltip" data-placement="bottom" title="' . implode('<br>', $creationData) . '"></i>
 
                                                     <!--small>
                                                         <em>
-                                                            '.implode('<br>', $creationData).'
+                                                            ' . implode('<br>', $creationData) . '
                                                         </em>
                                                     </small-->
         ';
@@ -288,5 +288,15 @@ if (!function_exists('uploadUserImage')) {
             'size' => $filesize,
         ];
 
+    }
+}
+
+if (!function_exists("booleanInTd")) {
+
+    function booleanInTd($value): ?string
+    {
+
+        $label = ((boolean)$value) ? 'Sim' : 'Não';
+        return '<span class="label label-' . ($value ? 'primary' : 'label-warning') . '">' . $label . '</span>';
     }
 }
